@@ -1,0 +1,9 @@
+form > .sendRecipe{
+    color: white;
+    border-color: grey;
+    padding-left: 1em;
+}
+
+form> button{
+    width: 50%;
+}
