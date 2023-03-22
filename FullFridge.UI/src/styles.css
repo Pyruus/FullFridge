@@ -25,6 +25,7 @@ nav{
     width: 25vw;
     height: 100vh;
     background: linear-gradient(180deg, #B0A8B9 0%, #59545F 100%);
+    padding-top: 1em;
 
     display: flex;
     flex-direction: column;
@@ -32,9 +33,32 @@ nav{
     align-items: center;
 }
 
-.recipes-list{
+.content{
     margin: 0;
     width: 75vw;
-    background: #1E1E1E;
     height: 100vh;
+}
+
+.main-panel{
+    background: #1E1E1E;
+}
+
+#choices{
+    background: linear-gradient(180deg, #D3F83F 0%, rgba(149, 174, 49, 0.64) 100%);
+    border-radius: 30px;
+    width: 400%;
+    height: 75vh;
+    overflow: hidden;
+    text-align: center;
+}
+
+#choices > option{
+    border-bottom: 1px solid grey;
+    width: 100%;
+}
+
+.shopping-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

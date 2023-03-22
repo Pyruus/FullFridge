@@ -1,4 +1,4 @@
-.recipes-list>div {
+.content>div {
     border: 1px solid gray;
     border-radius: 1em 1em 0 0;
     height: 300px;
@@ -9,7 +9,7 @@
     background: linear-gradient(90deg, #B0A8B9 0%, #59545F 100%);
 }
 
-.recipes-list{
+.content{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 2em;
@@ -17,7 +17,7 @@
     overflow: auto;
 }
 
-.recipes-list>div>img {
+.content>div>img {
     height: 50%;
     width: 100%;
     object-fit: cover;

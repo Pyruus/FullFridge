@@ -1,0 +1,10 @@
+.content > h1{
+    font-size: 3em;
+    color: white;
+}
+
+.content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
