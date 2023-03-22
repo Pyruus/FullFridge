@@ -1,0 +1,33 @@
+header{
+    display: flex;
+    width: 100vw;
+    height: 10%;
+    padding: 1em 0em 1em;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #8659CF 0%, #00C3A2 99.98%, rgba(217, 217, 217, 0) 99.99%);
+}
+
+.nav-buttons{
+    display: flex;
+    align-items: center;
+}
+
+.button{
+    display: flex;
+    background: #00A194;
+    box-shadow: 4em 2em 4em rgba(0, 0, 0, 0.25);
+    border-radius: 3em;
+    text-align: center;
+    padding: 0.5em;
+    color: white;
+    font-family: 'Inder';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2.5vh;
+    margin-left: 1vw;
+}
+
+a{
+    text-decoration: none;
+    display: inline-block;
+}
