@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 import { FindRecipeComponent } from './find-recipe/find-recipe.component';
+import { RecipeComponent } from './recipe/recipe.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AddRecipeComponent,
-    FindRecipeComponent
+    FindRecipeComponent,
+    RecipeComponent
   ],
   imports: [
     BrowserModule,
