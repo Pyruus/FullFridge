@@ -10,6 +10,7 @@
         public User CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Image { get; set; }
-        public List<Product> Products { get; set; }
+        public ICollection<ProductsRecipes> ProductsRecipes { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
