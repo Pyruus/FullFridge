@@ -1,4 +1,5 @@
 using FullFridge.API.Context;
+using FullFridge.API.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<FullFridgeContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("FullFridgeDb"))
     );
+builder.Services.AddScoped<IRecipeService, RecipeService>();
 
 var app = builder.Build();
 
