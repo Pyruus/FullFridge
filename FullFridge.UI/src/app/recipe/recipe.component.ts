@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-recipe',
@@ -8,13 +9,27 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RecipeComponent implements OnInit{
 
-  recipeId: string | null | undefined;
+  recipeId: any;
+  readonly ROOT_URL = 'https://localhost:7040/api'
+  recipe: any;
+
   constructor(
     private route: ActivatedRoute,
+    private http: HttpClient
   ) {}
+  
 
   ngOnInit(): void {
       this.recipeId = this.route.snapshot.paramMap.get('id');
+      this.http.get(this.ROOT_URL + `/Recipe/${this.recipeId}`).subscribe(
+        (response: any) => {
+          this.recipe = response;
+          console.log(this.recipe); // Print the fetched data
+        },
+        (error: any) => {
+          console.error(error);
+        }
+      );
   }
 
 }
