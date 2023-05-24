@@ -29,5 +29,6 @@ namespace FullFridge.API.Context
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<ProductsRecipes> ProductsRecipes { get; set; }
     }
 }

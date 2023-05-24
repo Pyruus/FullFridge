@@ -1,4 +1,7 @@
 ﻿using FullFridge.API.Context;
+using FullFridge.API.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace FullFridge.API.Services
 {
@@ -14,10 +17,29 @@ namespace FullFridge.API.Services
         {
             return _context.Recipes.Any(e => e.Id == id);
         }
+
+        public async Task<List<Recipe>> GetRecipesByProductList(List<int> productIds)
+        {
+            var recipes = await _context.Recipes
+        .Include(r => r.ProductsRecipes)
+        .ToListAsync();
+
+            _context.ChangeTracker.LazyLoadingEnabled = false;
+
+            var filteredRecipes = recipes.Where(recipe =>
+                productIds.All(productId =>
+                    recipe.ProductsRecipes.Any(pr => pr.ProductId == productId)))
+                .ToList();
+
+            _context.ChangeTracker.LazyLoadingEnabled = true;
+
+            return filteredRecipes;
+        }
     }
 
     public interface IRecipeService
     {
         bool RecipeExists(int id);
+        Task<List<Recipe>> GetRecipesByProductList(List<int> productIds);
     }
 }

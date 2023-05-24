@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using FullFridge.API.Models;
 using Microsoft.EntityFrameworkCore;
 using FullFridge.API.Services;
+using System.Threading.Tasks;
 
 namespace FullFridge.API.Controllers
 {
@@ -90,6 +91,15 @@ namespace FullFridge.API.Controllers
             }
 
             return NoContent();
+        }
+
+        //GET: api/Recipe/Products
+        [HttpGet("Products")]
+        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipesByProducts([FromQuery] List<int> productIds, bool allProducts, bool otherProducts)
+        {
+            var result = await _recipeService.GetRecipesByProductList(productIds);
+
+            return Ok(result);
         }
     }
 }
