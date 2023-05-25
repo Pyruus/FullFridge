@@ -1,5 +1,6 @@
 ﻿using FullFridge.API.Context;
 using FullFridge.API.Models;
+using FullFridge.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,16 @@ namespace FullFridge.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly FullFridgeContext _context;
+        private readonly IUserService _userService;
 
-        public UserController(FullFridgeContext context)
+        public UserController(FullFridgeContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
-        [HttpPost("register")]
+        //POST: api/User/Register
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(User user)
         {
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
@@ -26,6 +30,20 @@ namespace FullFridge.API.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        //POST: api/User/Login
+        [HttpPost("Login")]
+        public async Task<ActionResult<User>> Login(string email, string password)
+        {
+            var user = await _userService.Authenticate(email, password);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(user);
         }
     }
 }

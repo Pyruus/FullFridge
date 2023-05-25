@@ -18,6 +18,7 @@ builder.Services.AddDbContext<FullFridgeContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("FullFridgeDb"))
     );
 builder.Services.AddScoped<IRecipeService, RecipeService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddCors(options => {
     options.AddDefaultPolicy(builder => {
         builder.AllowAnyOrigin()
