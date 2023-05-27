@@ -20,7 +20,7 @@ namespace FullFridge.API.Services
             return _context.Recipes.Any(e => e.Id == id);
         }
 
-        public async Task<List<Recipe>> GetRecipesByProductList(List<int> productIds)
+        public async Task<List<RecipeListDTO>> GetRecipesByProductList(List<int> productIds)
         {
             var recipes = await _context.Recipes
         .Include(r => r.ProductsRecipes)
@@ -31,6 +31,13 @@ namespace FullFridge.API.Services
             var filteredRecipes = recipes.Where(recipe =>
                 productIds.All(productId =>
                     recipe.ProductsRecipes.Any(pr => pr.ProductId == productId)))
+                    .Select(recipes => new RecipeListDTO
+                    {
+                        Id = recipes.Id,
+                        Title = recipes.Title,
+                        Ratio = recipes.Likes - recipes.Dislikes,
+                        Image = recipes.Image
+                    })
                 .ToList();
 
             _context.ChangeTracker.LazyLoadingEnabled = true;
@@ -38,17 +45,29 @@ namespace FullFridge.API.Services
             return filteredRecipes;
         }
 
-        public async Task<List<Recipe>> SearchRecipeByRegex(string regex)
+        public async Task<List<RecipeListDTO>> SearchRecipeByRegex(string regex)
         {
             var recipes = await _context.Recipes.ToListAsync();
-            var searchResults = recipes.Where(recipe => Regex.IsMatch(recipe.Title, regex)).ToList();
+            var searchResults = recipes.Where(recipe => Regex.IsMatch(recipe.Title, regex)).Select(recipes => new RecipeListDTO
+            {
+                Id = recipes.Id,
+                Title = recipes.Title,
+                Ratio = recipes.Likes - recipes.Dislikes,
+                Image = recipes.Image
+            }).ToList();
 
             return searchResults;
         }
 
-        public async Task<List<Recipe>> GetTopRecipes()
+        public async Task<List<RecipeListDTO>> GetTopRecipes()
         {
-            var recipes = await _context.Recipes.OrderByDescending( recipe => recipe.Likes - recipe.Dislikes).Take(12).ToListAsync();
+            var recipes = await _context.Recipes.OrderByDescending( recipe => recipe.Likes - recipe.Dislikes).Take(12).Select(recipes => new RecipeListDTO
+            {
+                Id = recipes.Id,
+                Title = recipes.Title,
+                Ratio = recipes.Likes - recipes.Dislikes,
+                Image = recipes.Image
+            }).ToListAsync();
 
             return recipes;
         }
@@ -57,8 +76,8 @@ namespace FullFridge.API.Services
     public interface IRecipeService
     {
         bool RecipeExists(int id);
-        Task<List<Recipe>> GetRecipesByProductList(List<int> productIds);
-        Task<List<Recipe>> SearchRecipeByRegex(string regex);
-        Task<List<Recipe>> GetTopRecipes();
+        Task<List<RecipeListDTO>> GetRecipesByProductList(List<int> productIds);
+        Task<List<RecipeListDTO>> SearchRecipeByRegex(string regex);
+        Task<List<RecipeListDTO>> GetTopRecipes();
     }
 }
