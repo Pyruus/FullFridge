@@ -19,6 +19,7 @@ builder.Services.AddDbContext<FullFridgeContext>(
     );
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductService>(); 
 builder.Services.AddCors(options => {
     options.AddDefaultPolicy(builder => {
         builder.AllowAnyOrigin()
