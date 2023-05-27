@@ -14,10 +14,10 @@ namespace FullFridge.API.Services
             _context = context;
         }
 
-        public async Task<List<Product>> SearchProductByRegex(string regex)
+        public async Task<List<ProductDTO>> SearchProductByRegex(string regex)
         {
             var products = await _context.Products.ToListAsync();
-            var searchResults = products.Where(product => Regex.IsMatch(product.Name, regex)).Take(10).ToList();
+            var searchResults = products.Where(product => Regex.IsMatch(product.Name, regex)).Take(10).Select(products => new ProductDTO { Name = products.Name, Calories = products.Calories}).ToList();
 
             return searchResults;
         }
@@ -25,6 +25,6 @@ namespace FullFridge.API.Services
 
     public interface IProductService
     {
-        Task<List<Product>> SearchProductByRegex(string regex);
+        Task<List<ProductDTO>> SearchProductByRegex(string regex);
     }
 }

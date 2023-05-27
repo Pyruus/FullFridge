@@ -12,7 +12,7 @@ namespace FullFridge.API.Services
         {
             _context = context;
         }
-        public async Task<User> Authenticate(string email, string password)
+        public async Task<UserDTO> Authenticate(string email, string password)
         {
             var user = await _context.Users.Include(u => u.Details).SingleOrDefaultAsync(x => x.Email == email);
 
@@ -21,7 +21,13 @@ namespace FullFridge.API.Services
                 return null;
             }
 
-            return user;
+            return new UserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.Details.Name,
+                Surname = user.Details.Surname
+            };
         }
 
         private static bool VerifyPassword(string password, string passwordHash)
@@ -32,6 +38,6 @@ namespace FullFridge.API.Services
 
     public interface IUserService
     {
-        Task<User> Authenticate(string email, string password);
+        Task<UserDTO> Authenticate(string email, string password);
     }
 }
