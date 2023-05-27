@@ -101,5 +101,12 @@ namespace FullFridge.API.Controllers
 
             return Ok(result);
         }
+
+        //GET: api/Recipe/Top
+        [HttpGet("Top")]
+        public async Task<ActionResult<IEnumerable<Recipe>>> GetTopRecipes()
+        {
+            return await _recipeService.GetTopRecipes();
+        }
     }
 }

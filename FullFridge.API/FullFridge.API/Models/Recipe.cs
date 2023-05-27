@@ -6,7 +6,7 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public int? Likes { get; set; }
-        public int? DIslikes { get; set; }
+        public int? Dislikes { get; set; }
         public User? CreatedBy { get; set; }
         public DateTime? CreatedAt { get; set; }
         public string? Image { get; set; }

@@ -3,6 +3,7 @@ using FullFridge.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace FullFridge.API.Services
 {
@@ -44,6 +45,13 @@ namespace FullFridge.API.Services
 
             return searchResults;
         }
+
+        public async Task<List<Recipe>> GetTopRecipes()
+        {
+            var recipes = await _context.Recipes.OrderByDescending( recipe => recipe.Likes - recipe.Dislikes).Take(12).ToListAsync();
+
+            return recipes;
+        }
     }
 
     public interface IRecipeService
@@ -51,5 +59,6 @@ namespace FullFridge.API.Services
         bool RecipeExists(int id);
         Task<List<Recipe>> GetRecipesByProductList(List<int> productIds);
         Task<List<Recipe>> SearchRecipeByRegex(string regex);
+        Task<List<Recipe>> GetTopRecipes();
     }
 }
