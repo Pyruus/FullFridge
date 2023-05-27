@@ -30,6 +30,11 @@ namespace FullFridge.API.Services
             };
         }
 
+        public async Task<bool> UserExists(string email)
+        {
+            return await _context.Users.AnyAsync(u => u.Email == email);
+        }
+
         private static bool VerifyPassword(string password, string passwordHash)
         {
             return BCrypt.Net.BCrypt.Verify(password, passwordHash);
@@ -39,5 +44,7 @@ namespace FullFridge.API.Services
     public interface IUserService
     {
         Task<UserDTO> Authenticate(string email, string password);
+        Task<bool> UserExists(string email);
+
     }
 }

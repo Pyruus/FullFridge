@@ -24,6 +24,10 @@ namespace FullFridge.API.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(User user)
         {
+            if (await _userService.UserExists(user.Email))
+            {
+                return BadRequest("User already exists");
+            }
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
             _context.Users.Add(user);
