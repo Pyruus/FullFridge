@@ -48,7 +48,7 @@ namespace FullFridge.API.Services
         public async Task<List<RecipeListDTO>> SearchRecipeByRegex(string regex)
         {
             var recipes = await _context.Recipes.ToListAsync();
-            var searchResults = recipes.Where(recipe => Regex.IsMatch(recipe.Title, regex)).Select(recipes => new RecipeListDTO
+            var searchResults = recipes.Where(recipe => Regex.IsMatch(recipe.Title.ToLower(), regex.ToLower())).Select(recipes => new RecipeListDTO
             {
                 Id = recipes.Id,
                 Title = recipes.Title,
