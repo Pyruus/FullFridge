@@ -3,6 +3,7 @@ using System;
 using FullFridge.API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FullFridge.API.Migrations
 {
     [DbContext(typeof(FullFridgeContext))]
-    partial class FullFridgeContextModelSnapshot : ModelSnapshot
+    [Migration("20230528153408_update-comment-model")]
+    partial class updatecommentmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,13 +139,15 @@ namespace FullFridge.API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int?>("Id"));
 
-                    b.Property<int?>("DetailsId")
+                    b.Property<int>("DetailsId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -218,7 +223,9 @@ namespace FullFridge.API.Migrations
                 {
                     b.HasOne("FullFridge.API.Models.UserDetails", "Details")
                         .WithMany()
-                        .HasForeignKey("DetailsId");
+                        .HasForeignKey("DetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Details");
                 });
