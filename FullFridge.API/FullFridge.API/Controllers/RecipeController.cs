@@ -113,13 +113,34 @@ namespace FullFridge.API.Controllers
         [HttpPost("Comment")]
         public async Task<ActionResult> PostComment(Comment comment)
         {
-            _context.Comments.Add(comment);
-            var existingComment = await _context.Comments.Where(c => c.CreatedBy.Id == comment.CreatedBy.Id).Where(c => c.RecipeId == comment.RecipeId).ToListAsync();
+            var existingUser = await _context.Users.FindAsync(comment.CreatedById);
+            if (existingUser == null)
+            {
+                return BadRequest("User does not exist");
+            }
+
+            var existingComment = await _context.Comments.Where(c => c.CreatedById == comment.CreatedById).Where(c => c.RecipeId == comment.RecipeId).ToListAsync();
             if (existingComment.Count != 0)
             {
                 return BadRequest("You have already commented on this recipe");
             }
 
+            var commentedRecipe = await _context.Recipes.SingleOrDefaultAsync(recipe => recipe.Id == comment.RecipeId);
+            if (commentedRecipe == null)
+            {
+                return NotFound("Recipe doesnt exist");
+            }
+
+            if (comment.IsLike)
+            {
+                commentedRecipe.Likes++;
+            }
+            else
+            {
+                commentedRecipe.Dislikes++;
+            }
+
+            _context.Update(commentedRecipe);
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
             return Ok();

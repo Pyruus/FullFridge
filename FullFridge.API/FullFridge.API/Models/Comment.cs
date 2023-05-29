@@ -8,5 +8,6 @@
         public User? CreatedBy { get; set; }
         public DateTime? CreatedAt { get; set; }
         public int? RecipeId { get; set; }
+        public int? CreatedById { get; set; }
     }
 }
