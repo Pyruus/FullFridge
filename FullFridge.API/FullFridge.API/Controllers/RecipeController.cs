@@ -45,8 +45,6 @@ namespace FullFridge.API.Controllers
         [Authorize]
         public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
         {
-            //recipe.CreatedAt = DateTime.Now;
-
             _context.Recipes.Add(recipe);
             await _context.SaveChangesAsync();
 
