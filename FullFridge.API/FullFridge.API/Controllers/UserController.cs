@@ -43,8 +43,8 @@ namespace FullFridge.API.Controllers
             return Ok();
         }
 
-        //POST: api/User/Login
-        [HttpPost("Login")]
+        //GET: api/User/Login
+        [HttpGet("Login")]
         public async Task<ActionResult<UserDTO>> Login(string email, string password)
         {
             var user = await _userService.Authenticate(email, password);
