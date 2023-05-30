@@ -73,7 +73,6 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Product/Search
         [HttpGet("Search")]
-        [Authorize]
         public async Task<ActionResult<List<ProductDTO>>> SearchProducts(string searchString)
         {
             var searchResult = await _productService.SearchProductByRegex(searchString);
