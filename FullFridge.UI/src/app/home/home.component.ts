@@ -1,15 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
-  constructor(private router: Router) { }
+export class HomeComponent implements OnInit{
+  readonly ROOT_URL = 'https://localhost:7040/api';
+  recipes: any;
+
+  constructor(private router: Router, private http: HttpClient) { }
 
   redirectToRecipe(recipeId: string){
     this.router.navigate([`recipe/${recipeId}`]);
+  }
+
+  ngOnInit(): void {
+    this.http.get(this.ROOT_URL + `/Recipe/Top`).subscribe(
+      (response: any) => {
+        this.recipes = response;
+        console.log(this.recipes);
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 }

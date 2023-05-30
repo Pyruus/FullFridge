@@ -1,20 +1,9 @@
 <div class = 'main-panel'>
     <div class="content">
-        <div id="project" (click)="redirectToRecipe('1')">
+        <div id="project"  *ngFor="let recipe of recipes" (click)="redirectToRecipe(recipe?.id)">
+            <!-- <img [src]="recipe?.image" alt="../../favicon.ico">-->
             <img src="../../favicon.ico">
-            <h2>Recipe 1</h2>
-        </div>
-        <div id="project" (click)="redirectToRecipe('2')">
-            <img src="../../favicon.ico">
-            <h2>Recipe 2</h2>
-        </div>
-        <div id="project" (click)="redirectToRecipe('3')">
-            <img src="../../favicon.ico">
-            <h2>Recipe 3</h2>
-        </div>
-        <div id="project" (click)="redirectToRecipe('4')">
-            <img src="../../favicon.ico">
-            <h2>Recipe 4</h2>
+            <h2>{{recipe?.title}}</h2>
         </div>
     </div>
     <nav>
