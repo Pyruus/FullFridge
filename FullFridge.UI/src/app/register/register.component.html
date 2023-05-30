@@ -1,14 +1,14 @@
 <div class="security-panel">
     <div class="register-container">
-        <form class="register">
+          <form [formGroup]="myForm" (ngSubmit)="submitForm()" class="register">
             <div class="form-header">Sign up</div>
             <div class="lr-swap">Already have an account? <a href="login" class="lr-swap">Sign in</a></div>
-            <input name="email" type="text" placeholder="email@email.com">
-            <input name="password" type="password" placeholder="Password">
-            <input name="confirm-password" type="password" placeholder="Confirm password">
-            <input name="name" type="text" placeholder="Name">
-            <input name="surname" type="text" placeholder="Surname">
-            <button type="submit">Sign up</button>
-        </form>
+            <input type="email" id="email" formControlName="email" required placeholder="email@example.com">
+            <input type="password" id="password" formControlName="password" required placeholder="Password">
+            <input type="password" id="confirmPassword" formControlName="confirmPassword" required placeholder="Confirm password">
+            <input type="text" id="name" formControlName="name" required placeholder="Name">
+            <input type="text" id="surname" formControlName="surname" required placeholder="Surname">
+            <button type="submit" [disabled]="myForm.invalid">Submit</button>
+          </form>
     </div>
 </div>
