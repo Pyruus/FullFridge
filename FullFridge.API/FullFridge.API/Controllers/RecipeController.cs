@@ -23,7 +23,6 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Recipe
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
         {
             return await _context.Recipes.ToListAsync();
@@ -31,7 +30,6 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Recipe/{id}
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<ActionResult<Recipe>> GetRecipeById(int id)
         {
             var recipe = await _context.Recipes.SingleOrDefaultAsync(r => r.Id == id);
@@ -101,7 +99,6 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Recipe/Products
         [HttpGet("Products")]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipesByProducts([FromQuery] List<int> productIds, bool allProducts, bool otherProducts)
         {
             var result = await _recipeService.GetRecipesByProductList(productIds);
@@ -111,7 +108,6 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Recipe/Top
         [HttpGet("Top")]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<RecipeListDTO>>> GetTopRecipes()
         {
             return await _recipeService.GetTopRecipes();
