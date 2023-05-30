@@ -14,3 +14,4 @@ User provides app with list of products they have and then the application sugge
 - .NET Core
 - Entity Framework
 - Angular
+- Python (for creating a script adding products from API to database)
