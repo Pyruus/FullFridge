@@ -4,6 +4,11 @@ using FullFridge.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Security.Claims;
+using System.Text;
 
 namespace FullFridge.API.Controllers
 {
@@ -13,11 +18,13 @@ namespace FullFridge.API.Controllers
     {
         private readonly FullFridgeContext _context;
         private readonly IUserService _userService;
+        private readonly IConfiguration _configuration;
 
-        public UserController(FullFridgeContext context, IUserService userService)
+        public UserController(FullFridgeContext context, IUserService userService, IConfiguration configuration)
         {
             _context = context;
             _userService = userService;
+            _configuration = configuration;
         }
 
         //POST: api/User/Register
@@ -46,6 +53,32 @@ namespace FullFridge.API.Controllers
             {
                 return Unauthorized();
             }
+
+            var issuer = _configuration["Jwt:Issuer"];
+            var audience = _configuration["Jwt:Audience"];
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                new Claim("Id", user.Id.ToString()),
+                new Claim("Email", user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti,
+                Guid.NewGuid().ToString())
+             }),
+                Expires = DateTime.UtcNow.AddMinutes(30),
+                Issuer = issuer,
+                Audience = audience,
+                SigningCredentials = new SigningCredentials
+                (new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha512Signature)
+            };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var jwtToken = tokenHandler.WriteToken(token);
+            var stringToken = tokenHandler.WriteToken(token);
+
+            user.Token = stringToken;
 
             return Ok(user);
         }

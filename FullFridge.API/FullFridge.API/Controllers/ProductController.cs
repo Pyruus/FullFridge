@@ -5,6 +5,7 @@ using FullFridge.API.Models;
 using Microsoft.EntityFrameworkCore;
 using FullFridge.API.Services;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FullFridge.API.Controllers
 {
@@ -22,6 +23,7 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Product
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             return await _context.Products.ToListAsync();
@@ -29,6 +31,7 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Product/{id}
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
             var product = await _context.Products.SingleOrDefaultAsync(r => r.Id == id);
@@ -41,6 +44,7 @@ namespace FullFridge.API.Controllers
 
         //POST: api/Product
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
             //product.CreatedAt = DateTime.Now;
@@ -53,6 +57,7 @@ namespace FullFridge.API.Controllers
 
         //DELETE: api/Product/{id}
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -68,6 +73,7 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Product/Search
         [HttpGet("Search")]
+        [Authorize]
         public async Task<ActionResult<List<ProductDTO>>> SearchProducts(string searchString)
         {
             var searchResult = await _productService.SearchProductByRegex(searchString);

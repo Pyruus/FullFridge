@@ -5,6 +5,7 @@ using FullFridge.API.Models;
 using Microsoft.EntityFrameworkCore;
 using FullFridge.API.Services;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FullFridge.API.Controllers
 {
@@ -22,6 +23,7 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Recipe
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
         {
             return await _context.Recipes.ToListAsync();
@@ -29,6 +31,7 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Recipe/{id}
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Recipe>> GetRecipeById(int id)
         {
             var recipe = await _context.Recipes.SingleOrDefaultAsync(r => r.Id == id);
@@ -41,6 +44,7 @@ namespace FullFridge.API.Controllers
 
         //POST: api/Recipe
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
         {
             //recipe.CreatedAt = DateTime.Now;
@@ -53,6 +57,7 @@ namespace FullFridge.API.Controllers
 
         //DELETE: api/Recipe/{id}
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteRecipe(int id)
         {
             var recipe = await _context.Recipes.FindAsync(id);
@@ -68,6 +73,7 @@ namespace FullFridge.API.Controllers
 
         //PUT: api/Recipe/{id}
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult> PutRecipe(int id, Recipe recipe)
         {
             recipe.Id = id;
@@ -95,6 +101,7 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Recipe/Products
         [HttpGet("Products")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipesByProducts([FromQuery] List<int> productIds, bool allProducts, bool otherProducts)
         {
             var result = await _recipeService.GetRecipesByProductList(productIds);
@@ -104,6 +111,7 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Recipe/Top
         [HttpGet("Top")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<RecipeListDTO>>> GetTopRecipes()
         {
             return await _recipeService.GetTopRecipes();
@@ -111,6 +119,7 @@ namespace FullFridge.API.Controllers
 
         //POST: api/Recipe/Comment
         [HttpPost("Comment")]
+        [Authorize]
         public async Task<ActionResult> PostComment(Comment comment)
         {
             var existingUser = await _context.Users.FindAsync(comment.CreatedById);
@@ -148,6 +157,7 @@ namespace FullFridge.API.Controllers
 
         //DELETE: api/Recipe/Comment/{id}
         [HttpDelete("Comment/{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteComment(int id)
         {
             var comment = await _context.Comments.FindAsync(id);
