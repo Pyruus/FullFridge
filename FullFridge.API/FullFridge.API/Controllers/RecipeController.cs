@@ -111,6 +111,13 @@ namespace FullFridge.API.Controllers
             return await _recipeService.GetTopRecipes();
         }
 
+        //GET: api/Recipe/Search
+        [HttpGet("Search")]
+        public async Task<ActionResult<IEnumerable<RecipeListDTO>>> SeacrhRecipes(string searchString)
+        {
+            return await _recipeService.SearchRecipeByRegex(searchString);
+        }
+
         //POST: api/Recipe/Comment
         [HttpPost("Comment")]
         [Authorize]
