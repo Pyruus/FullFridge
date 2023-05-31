@@ -1,11 +1,11 @@
 <div class="main-panel">
     <div class="content">
         <h1>Add a recipe</h1>
-        <form id="addRecipe">
-            <input name="name" type="text" placeholder="Name">
-            <textarea name="description" rows="8" placeholder="Put a recipe here"></textarea>
-            <input type="file" name="file" class="sendRecipe">
-        </form>
+        <form [formGroup]="myForm" (ngSubmit)="submitForm()" id="addRecipe">
+            <input name="name" type="text" formControlName="name" required placeholder="Name">
+            <textarea name="description" rows="8" formControlName="description" required placeholder="Put a recipe here"></textarea>
+            <button type="submit" [disabled]="myForm.invalid">Submit</button>
+          </form>
     </div>
     <nav>
         <form class="shopping-list">
