@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   myForm: FormGroup;
+  failedLogin: boolean;
 
   readonly ROOT_URL = 'https://localhost:7040/api'
 
@@ -20,6 +21,8 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+
+    this.failedLogin = false;
    }
 
 
@@ -45,7 +48,10 @@ export class LoginComponent implements OnInit {
             this.cookieService.set("userName", response.name);
             this.router.navigate([``]);
           },
-          error: error => console.error('Error:', error)
+          error: error => {
+            console.error('Error:', error);
+            this.failedLogin = true;
+          }
         }
     );
     }

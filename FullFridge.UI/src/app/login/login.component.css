@@ -35,7 +35,6 @@ form.login{
 }
 
 button{
-    background: #00A194;
     border-radius: 30px;
 
     width: 80%;
@@ -58,4 +57,13 @@ input, textarea{
 
 .login-container{
     width: 30%;
+}
+
+button:enabled{
+    background: #00A194;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #384847;
 }

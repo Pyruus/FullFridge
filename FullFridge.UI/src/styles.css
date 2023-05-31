@@ -67,3 +67,7 @@ nav{
     font-size: 3em;
     color: white;
 }
+
+.failInfo{
+    color: red;
+}

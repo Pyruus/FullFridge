@@ -27,5 +27,6 @@ export class AppComponent {
     this.cookieService.delete("userId");
     this.cookieService.delete("userName");
     this.cookieService.delete("token");
+    this.router.navigate([`login`]);
   }
 }
