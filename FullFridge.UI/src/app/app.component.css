@@ -12,6 +12,16 @@ header{
     align-items: center;
 }
 
+.user-buttons{
+    display: flex;
+}
+
+fa-icon{
+    color: white;
+    padding-right: 1em;
+    cursor: pointer;
+}
+
 .button{
     display: flex;
     background: #00A194;

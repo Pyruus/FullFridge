@@ -14,6 +14,11 @@
             <a href='add-recipe' class="button">Add a recipe</a>
         </div>
     </div>
+    <div class="user-buttons">
+      <fa-icon *ngIf="!isUserLogged()" [icon]="faUser" size="2x" (click)="redirectToLogin()"></fa-icon>
+      <fa-icon *ngIf="isUserLogged()" [icon]="faRightFromBracket" size="2x" (click)="logout()"></fa-icon>
+    </div>
+
   </header>
   <main>
     <router-outlet></router-outlet>

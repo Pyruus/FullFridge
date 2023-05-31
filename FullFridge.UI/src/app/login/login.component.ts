@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   readonly ROOT_URL = 'https://localhost:7040/api'
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, private cookieService: CookieService) 
+  constructor(private http: HttpClient, private formBuilder: FormBuilder, private cookieService: CookieService, private router: Router) 
   {
     this.myForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -37,10 +38,11 @@ export class LoginComponent implements OnInit {
 
       this.http.get<any>(this.ROOT_URL + `/User/Login`, { params }).subscribe(
         (response: any) => {
-          console.log(response); // Print the fetched data
+          console.log(response);
           this.cookieService.set("token", response.token);
           this.cookieService.set("userId", response.id);
           this.cookieService.set("userName", response.name);
+          this.router.navigate([``]);
         },
         (error: any) => {
           console.error(error);
