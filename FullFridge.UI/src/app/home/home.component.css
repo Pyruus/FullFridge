@@ -23,3 +23,7 @@
     object-fit: cover;
     border-radius: 1em 1em 0 0;
 }
+
+.recipe{
+    cursor: pointer;
+}

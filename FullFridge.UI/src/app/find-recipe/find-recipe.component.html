@@ -15,7 +15,7 @@
             <select multiple name="choices[]" id="choices">
                 <option *ngFor="let product of chosenProductsNames">{{product}}</option>
             </select>
-            <input type="submit" value="Find">
+            <input type="submit" value="Find" (click)="searchByProducts()">
         </form>
     </nav>
 </div>

@@ -9,12 +9,14 @@ import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'add-recipe', component: AddRecipeComponent },
   { path: 'find-recipe', component: FindRecipeComponent },
   { path: 'recipe/:id', component: RecipeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: '**', component: HomeComponent}
+  { path: '**', component: HomeComponent},
+
 ];
 
 @NgModule({

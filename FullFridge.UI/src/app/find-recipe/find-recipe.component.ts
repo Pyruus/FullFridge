@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-find-recipe',
@@ -16,7 +16,7 @@ export class FindRecipeComponent {
 
   
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   search() {
     const params = {
@@ -41,7 +41,27 @@ export class FindRecipeComponent {
   selectProduct(product: any) {
     this.chosenProductsNames.push(product.name);
     this.chosenProductsIds.push(product.id);
-    console.log(this.chosenProductsIds);
-    console.log(this.chosenProductsNames);
+  }
+  
+  searchByProducts(){
+    const params = {
+      productIds: this.chosenProductsIds
+    }
+
+    if (this.chosenProductsIds.length > 0) {
+      this.http.get<any>(this.ROOT_URL + `/Recipe/Products`, { params }).subscribe(
+        (data) => {
+          const navigationExtras: NavigationExtras = {
+            state: {
+              foundRecipes: data
+            }
+          };
+          this.router.navigate(['home'], navigationExtras);
+        },
+        (error) => {
+          console.error('Error:', error);
+        }
+      );
+    }
   }
 }
