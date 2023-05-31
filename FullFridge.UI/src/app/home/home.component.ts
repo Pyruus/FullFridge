@@ -31,12 +31,12 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {;
     if(this.recipes == undefined){
       this.http.get(this.ROOT_URL + `/Recipe/Top`).subscribe(
-        (response: any) => {
-          this.recipes = response;
-          console.log(this.recipes);
-        },
-        (error: any) => {
-          console.error(error);
+        {
+          next: response => {
+            this.recipes = response;
+            console.log(this.recipes);
+          },
+          error: error=> console.error(error)
         }
       );
     }
@@ -52,12 +52,12 @@ export class HomeComponent implements OnInit{
       searchString: _searchString
     }
     this.http.get(this.ROOT_URL + `/Recipe/Search`, { params }).subscribe(
-      (response: any) => {
-        this.recipes = response;
-        console.log(this.recipes);
-      },
-      (error: any) => {
-        console.error(error);
+      {
+        next: response => {
+          this.recipes = response;
+          console.log(this.recipes);
+        },
+        error: error => console.error(error)
       }
     );
   }

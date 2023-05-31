@@ -22,12 +22,12 @@ export class RecipeComponent implements OnInit{
   ngOnInit(): void {
       this.recipeId = this.route.snapshot.paramMap.get('id');
       this.http.get(this.ROOT_URL + `/Recipe/${this.recipeId}`).subscribe(
-        (response: any) => {
-          this.recipe = response;
-          console.log(this.recipe); // Print the fetched data
-        },
-        (error: any) => {
-          console.error(error);
+        {
+          next: response => {
+            this.recipe = response;
+            console.log(this.recipe); // Print the fetched data
+          },
+          error: error => console.error('Error:', error)
         }
       );
   }

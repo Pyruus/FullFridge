@@ -25,12 +25,12 @@ export class FindRecipeComponent {
 
     if (this.searchTerm.length >= 3) {
       this.http.get<any>(this.ROOT_URL + `/Product/Search`, { params }).subscribe(
-        (data) => {
-          console.log(data);
-          this.results = data;
-        },
-        (error) => {
-          console.error('Error:', error);
+        {
+            next: response => {
+            console.log(response);
+            this.results = response;
+          },
+          error: error => console.error('Error:', error)
         }
       );
     } else {
@@ -50,16 +50,16 @@ export class FindRecipeComponent {
 
     if (this.chosenProductsIds.length > 0) {
       this.http.get<any>(this.ROOT_URL + `/Recipe/Products`, { params }).subscribe(
-        (data) => {
-          const navigationExtras: NavigationExtras = {
-            state: {
-              foundRecipes: data
-            }
-          };
-          this.router.navigate(['home'], navigationExtras);
-        },
-        (error) => {
-          console.error('Error:', error);
+        {
+          next: response => {
+            const navigationExtras: NavigationExtras = {
+              state: {
+                foundRecipes: response
+              }
+            };
+            this.router.navigate(['home'], navigationExtras);
+          },
+          error: error => console.error('Error:', error)
         }
       );
     }

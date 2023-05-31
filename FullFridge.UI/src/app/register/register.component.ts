@@ -58,11 +58,9 @@ export class RegisterComponent implements OnInit {
       };
 
       this.http.post(this.ROOT_URL + `/User/Register`, requestBody).subscribe(
-        (response: any) => {
-          console.log(requestBody); // Print the fetched data
-        },
-        (error: any) => {
-          console.error(error);
+        {
+          next: response => console.log(requestBody),
+          error: error => console.error('Error:', error)
         }
     );
     }

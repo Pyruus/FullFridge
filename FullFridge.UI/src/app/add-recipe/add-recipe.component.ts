@@ -38,11 +38,9 @@ export class AddRecipeComponent {
       };
 
       this.http.post(this.ROOT_URL + `/Recipe`, requestBody, { headers }).subscribe(
-        (response: any) => {
-          console.log(requestBody); // Print the fetched data
-        },
-        (error: any) => {
-          console.error(error);
+        {
+          next: response => console.log(requestBody),
+          error: error => console.error(error)
         }
     );
     }
