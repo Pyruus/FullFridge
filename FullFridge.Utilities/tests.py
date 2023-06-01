@@ -22,7 +22,7 @@ def get_api_data(request_url):
         print("Error: API request failed with status code", response.status_code)
         response.raise_for_status()
 
-def insert():
+def insert_big():
     """ Connect to the PostgreSQL database server """
     conn = None
     api_url = "https://api.edamam.com/api/food-database/v2/parser?app_id=eeb6bd23&app_key=%209b40881c82c2425a122df43de8ef1176&nutrition-type=cookin"
@@ -63,5 +63,34 @@ def insert():
             conn.close()
             print('Database connection closed.')
 
+def insert_small():
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    with open('Food.json', encoding='utf-8') as file:
+        data = json.load(file)
+    try:
+        # read connection parameters
+        params = config()
+        # connect to the PostgreSQL server
+        print('Connecting to the PostgreSQL database...')
+        conn = psycopg2.connect(**params)
+        # create a cursor
+        cur = conn.cursor()
+        
+        #insert new order in a loop
+        query_insert = "INSERT INTO public.\"Products\" (\"Name\", \"Category\") VALUES (%s, %s)"
+        for row in data:
+            cur.execute(query_insert, (row['name'], row['food_group']))
+            conn.commit()      
+       
+	# close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
+
 if __name__ == '__main__':
-    insert()
+    insert_small()
