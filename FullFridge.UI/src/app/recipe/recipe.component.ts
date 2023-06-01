@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { FileUploadService } from '../file-upload.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-recipe',
@@ -12,10 +15,14 @@ export class RecipeComponent implements OnInit{
   recipeId: any;
   readonly ROOT_URL = 'https://localhost:7040/api'
   recipe: any;
+  fileUrl: string | null = null;
+  sanitizedFileUrl: SafeUrl | null = null;
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private fileService: FileUploadService,
+    private sanitizer: DomSanitizer
   ) {}
   
 
@@ -25,11 +32,22 @@ export class RecipeComponent implements OnInit{
         {
           next: response => {
             this.recipe = response;
-            console.log(this.recipe); // Print the fetched data
+            this.getFile(this.recipe.image);
           },
           error: error => console.error('Error:', error)
         }
       );
   }
 
+  getFile(fileName: string): void {
+    this.fileService.getFile(fileName).subscribe(
+      (file: Blob) => {
+        this.fileUrl = URL.createObjectURL(file);
+        this.sanitizedFileUrl = this.sanitizer.bypassSecurityTrustUrl(this.fileUrl);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 }

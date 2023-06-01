@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,18 @@ export class FileUploadService {
     formData.append('file', file);
 
     return this.http.post<any>(this.ROOT_URL + '/Recipe/File/' + recipeId, formData).toPromise();
+  }
+
+  getFile(fileName: string): Observable<Blob> {
+    const url = `${this.ROOT_URL}/Recipe/File/${fileName}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'responseType': 'blob'
+    });
+
+    return this.http.get(url, {
+      headers: headers,
+      responseType: 'blob'
+    });
   }
 }
