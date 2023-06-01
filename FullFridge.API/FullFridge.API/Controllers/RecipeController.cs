@@ -171,5 +171,41 @@ namespace FullFridge.API.Controllers
 
             return Ok();
         }
+
+        //POST: api/Recipe/File/{recipeId}
+        [HttpPost("File/{recipeId}")]
+        //[Authorize]
+        public async Task<IActionResult> Upload(int recipeId, IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+
+                if (!Directory.Exists(uploadDir))
+                    Directory.CreateDirectory(uploadDir);
+
+                var fileName = Path.GetFileName(Guid.NewGuid().ToString() + "_" + file.FileName);
+
+                var filePath = Path.Combine(uploadDir, fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+
+                var recipe = await _context.Recipes.SingleOrDefaultAsync(r => r.Id == recipeId);
+                if (recipe == null)
+                {
+                    return NotFound("Recipe not found");
+                }
+                recipe.Image = filePath;
+
+                await _context.SaveChangesAsync();
+                return Ok(new { filePath });
+            }
+
+            return BadRequest("No file was uploaded.");
+        }
+
     }
 }
