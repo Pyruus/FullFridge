@@ -212,13 +212,41 @@ namespace FullFridge.API.Controllers
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", fileName);
 
-            if (System.IO.File.Exists(filePath))
+            if (!System.IO.File.Exists(filePath))
             {
-                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                return File(fileStream, "application/octet-stream");
+                return NotFound();
             }
 
-            return NotFound();
+            string fileExtension = Path.GetExtension(filePath);
+
+            // Set the content-disposition header with the file name and extension
+            string contentDisposition = $"attachment; filename=\"{fileName}\"";
+            Response.Headers.Add("Content-Disposition", contentDisposition);
+
+            // Read the file content
+            var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+
+            // Return the file content as a file response with the appropriate content type
+            return File(fileBytes, GetContentType(fileExtension));
+        }
+
+        private string GetContentType(string fileExtension)
+        {
+            // Map the file extension to the appropriate content type
+            // You can use the following example or create your own mapping logic
+            switch (fileExtension)
+            {
+                case ".pdf":
+                    return "application/pdf";
+                case ".png":
+                    return "image/png";
+                case ".jpg":
+                case ".jpeg":
+                    return "image/jpeg";
+                // Add more file extensions and content types as needed
+                default:
+                    return "application/octet-stream";
+            }
         }
 
     }
