@@ -48,7 +48,7 @@ namespace FullFridge.API.Controllers
             _context.Recipes.Add(recipe);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(recipe.Id);
         }
 
         //DELETE: api/Recipe/{id}
