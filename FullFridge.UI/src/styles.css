@@ -23,7 +23,7 @@ input, textarea{
 
 nav{
     width: 25vw;
-    height: 100vh;
+    height: auto;
     background: linear-gradient(180deg, #B0A8B9 0%, #59545F 100%);
     padding-top: 1em;
 
