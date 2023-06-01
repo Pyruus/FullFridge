@@ -198,13 +198,27 @@ namespace FullFridge.API.Controllers
                 {
                     return NotFound("Recipe not found");
                 }
-                recipe.Image = filePath;
+                recipe.Image = fileName;
 
                 await _context.SaveChangesAsync();
-                return Ok(new { filePath });
+                return Ok(new { fileName });
             }
 
             return BadRequest("No file was uploaded.");
+        }
+
+        [HttpGet("File/{fileName}")]
+        public async Task<IActionResult> GetFile(string fileName)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", fileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                return File(fileStream, "application/octet-stream");
+            }
+
+            return NotFound();
         }
 
     }
