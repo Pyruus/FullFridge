@@ -2,7 +2,8 @@
     <div class="content">
         <div class="recipe" *ngFor="let recipe of recipes" (click)="redirectToRecipe(recipe?.id)">
             <!-- <img [src]="recipe?.image" alt="../../favicon.ico">-->
-            <img src="../../favicon.ico">
+            <!-- <img src="../../favicon.ico"> -->
+            <img [src]=recipe.imageSrc>
             <h2>{{recipe?.title}}</h2>
         </div>
     </div>
