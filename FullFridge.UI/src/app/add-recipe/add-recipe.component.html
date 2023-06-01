@@ -4,6 +4,7 @@
         <form [formGroup]="myForm" (ngSubmit)="submitForm()" id="addRecipe">
             <input name="name" type="text" formControlName="name" required placeholder="Name">
             <textarea name="description" rows="8" formControlName="description" required placeholder="Put a recipe here"></textarea>
+            <input type="file" (change)="onFileSelected($event)">
             <input type="submit" [disabled]="myForm.invalid">
           </form>
     </div>
