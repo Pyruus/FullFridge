@@ -37,6 +37,8 @@ namespace FullFridge.API.Services
                         Id = recipes.Id,
                         Title = recipes.Title,
                         Ratio = recipes.Likes - recipes.Dislikes,
+                        Likes = recipes.Likes,
+                        Dislikes = recipes.Dislikes,
                         Image = recipes.Image
                     })
                 .ToList();
@@ -54,6 +56,8 @@ namespace FullFridge.API.Services
                 Id = recipes.Id,
                 Title = recipes.Title,
                 Ratio = recipes.Likes - recipes.Dislikes,
+                Likes = recipes.Likes,
+                Dislikes = recipes.Dislikes,
                 Image = recipes.Image
             }).ToList();
 
@@ -67,6 +71,8 @@ namespace FullFridge.API.Services
                 Id = recipes.Id,
                 Title = recipes.Title,
                 Ratio = recipes.Likes - recipes.Dislikes,
+                Likes = recipes.Likes,
+                Dislikes = recipes.Dislikes,
                 Image = recipes.Image
             }).ToListAsync();
 

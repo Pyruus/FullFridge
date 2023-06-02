@@ -46,6 +46,8 @@ namespace FullFridge.API.Controllers
                 Description = recipe.Description,
                 Image = recipe.Image,
                 Ratio = recipe.Likes - recipe.Dislikes,
+                Likes = recipe.Likes,
+                Dislikes = recipe.Dislikes,
                 Comments = comments
             };
             return Ok(recipeDetails);
