@@ -23,8 +23,9 @@ namespace FullFridge.API.Services
         public async Task<List<RecipeListDTO>> GetRecipesByProductList(List<int> productIds)
         {
             var recipes = await _context.Recipes
-        .Include(r => r.ProductsRecipes)
-        .ToListAsync();
+            .OrderByDescending(recipe => recipe.Likes - recipe.Dislikes)
+            .Include(r => r.ProductsRecipes)
+            .ToListAsync();
 
             _context.ChangeTracker.LazyLoadingEnabled = false;
 
