@@ -10,7 +10,7 @@
         <div class="find-recipe-button">
             <a href='find-recipe' class="button">Find a recipe</a>
         </div>
-        <div class="add-recipe-button">
+        <div class="add-recipe-button" *ngIf="isUserLogged()">
             <a href='add-recipe' class="button">Add a recipe</a>
         </div>
     </div>
