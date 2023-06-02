@@ -21,6 +21,16 @@
         public string Title { get; set; }
         public int? Ratio { get; set; }
         public string? Image { get; set; }
-        //TODO: list of products
+    }
+
+    public class RecipeDetailsDTO
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public int? Ratio { get; set; }
+        public string? Image { get; set; }
+        public List<Comment>? Comments { get; set; }
+
     }
 }

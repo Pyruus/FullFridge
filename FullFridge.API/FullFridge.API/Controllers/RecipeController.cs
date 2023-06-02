@@ -37,7 +37,18 @@ namespace FullFridge.API.Controllers
             {
                 return NotFound();
             }
-            return Ok(recipe);
+            var comments = await _context.Comments.Include(c => c.CreatedBy).ThenInclude(u => u.Details).Where(c => c.RecipeId == recipe.Id).ToListAsync();
+
+            var recipeDetails = new RecipeDetailsDTO
+            {
+                Id = recipe.Id,
+                Title = recipe.Title,
+                Description = recipe.Description,
+                Image = recipe.Image,
+                Ratio = recipe.Likes - recipe.Dislikes,
+                Comments = comments
+            };
+            return Ok(recipeDetails);
         }
 
         //POST: api/Recipe
