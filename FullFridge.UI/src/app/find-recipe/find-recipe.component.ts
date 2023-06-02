@@ -39,6 +39,11 @@ export class FindRecipeComponent {
   }
 
   selectProduct(product: any) {
+    this.searchTerm = '';
+    this.results = [];
+    if (this.chosenProductsIds.includes(product.id)){
+      return;
+    }
     this.chosenProductsNames.push(product.name);
     this.chosenProductsIds.push(product.id);
   }

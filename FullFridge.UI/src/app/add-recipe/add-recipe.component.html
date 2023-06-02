@@ -9,13 +9,18 @@
           </form>
     </div>
     <nav>
+        <input type="text" [(ngModel)]="searchTerm" (keyup)="search()" placeholder="Products">
+            <div class="results-container" *ngIf="results.length > 0" >
+                <ul class="results-list">
+                    <li *ngFor="let result of results" (click)="selectProduct(result)">
+                    {{ result.name }}
+                    </li>
+                </ul>
+            </div>
         <form class="shopping-list">
             <select multiple name="choices[]" id="choices">
-                <option value="eggs">Eggs</option>
-                <option value="bread">Bread</option>
-                <option value="pasta">Pasta</option>
+                <option *ngFor="let product of chosenProductsNames">{{product}}</option>
             </select>
-            <input type="submit" value="Add">
         </form>
     </nav>
 </div>
