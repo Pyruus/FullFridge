@@ -27,3 +27,24 @@
 .recipe{
     cursor: pointer;
 }
+
+h1{
+    font-size: 1.17em;
+}
+
+.socialSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+}
+
+.like{
+    margin-right: auto;
+    color: green;
+}
+
+.dislike{
+    margin-left: auto;
+    color: darkred;
+}
