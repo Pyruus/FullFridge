@@ -26,7 +26,8 @@ namespace FullFridge.API.Services
                 Id = user.Id,
                 Email = user.Email,
                 Name = user.Details.Name,
-                Surname = user.Details.Surname
+                Surname = user.Details.Surname,
+                Role = user.Role
             };
         }
 
