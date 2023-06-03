@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,11 +10,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
   myForm: FormGroup;
+  registerError: string | null = null;
+  passwordsMatch: boolean = true;
 
   readonly ROOT_URL = 'https://localhost:7040/api'
-  
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) 
-  {
+
+  constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router) {
     this.myForm = this.formBuilder.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -21,7 +23,7 @@ export class RegisterComponent implements OnInit {
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });
-   }
+  }
 
   ngOnInit(): void {
   }
@@ -29,7 +31,7 @@ export class RegisterComponent implements OnInit {
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password');
     const confirmPassword = form.get('confirmPassword');
-  
+
     if (password && confirmPassword && password.value !== confirmPassword.value) {
       if (confirmPassword.errors) {
         confirmPassword.setErrors({ ...confirmPassword.errors, 'passwordMismatch': true });
@@ -59,10 +61,24 @@ export class RegisterComponent implements OnInit {
 
       this.http.post(this.ROOT_URL + `/User/Register`, requestBody).subscribe(
         {
-          next: response => console.log(requestBody),
-          error: error => console.error('Error:', error)
+          next: response => {
+            this.router.navigate(['login']);
+          },
+          error: error => {
+            this.registerError = error.error;
+          }
         }
-    );
+      );
+    }
+  }
+
+  validatePasswords(){
+    const formData = this.myForm.value;
+    if(formData.password != formData.confirmPassword && formData.password != '' && formData.confirmPassword != ''){
+      this.passwordsMatch = false;
+    }
+    else{
+      this.passwordsMatch = true;
     }
   }
 }

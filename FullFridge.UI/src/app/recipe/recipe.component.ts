@@ -26,6 +26,7 @@ export class RecipeComponent implements OnInit {
   faDislike = faThumbsDown;
   myForm: FormGroup;
   isLike = true;
+  commentError: string | null = null;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fileService: FileUploadService, private sanitizer: DomSanitizer, private cookieService: CookieService, private router: Router, private formBuilder: FormBuilder, private location: Location) {
     this.myForm = this.formBuilder.group({
@@ -99,10 +100,11 @@ export class RecipeComponent implements OnInit {
       this.http.post(this.ROOT_URL + `/Recipe/Comment`, requestBody, { headers }).subscribe(
         {
           next: response => {
-            console.log(response);
             window.location.reload();
           },
-          error: error => console.error(error)
+          error: error => {
+            this.commentError = error.error;
+          }
         }
       );
     }

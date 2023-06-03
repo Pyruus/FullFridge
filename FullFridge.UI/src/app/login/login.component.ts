@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
       this.http.get<any>(this.ROOT_URL + `/User/Login`, { params }).subscribe(
         {
           next: response => {
-            console.log(response);
             this.cookieService.set("token", response.token);
             this.cookieService.set("userId", response.id);
             this.cookieService.set("userName", response.name);
@@ -50,7 +49,6 @@ export class LoginComponent implements OnInit {
             this.router.navigate([``]);
           },
           error: error => {
-            console.error('Error:', error);
             this.failedLogin = true;
           }
         }

@@ -63,7 +63,6 @@ export class HomeComponent implements OnInit{
       {
         next: response => {
           this.recipes = response;
-          console.log(this.recipes);
           this.assignImages();
         },
         error: error => console.error(error)

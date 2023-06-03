@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { FileUploadService } from '../file-upload.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-recipe',
@@ -17,10 +18,11 @@ export class AddRecipeComponent {
   chosenProductsIds: number[] = [];
   searchTerm: string = '';
   results: any[] = [];
+  addingError: string | null = null;
 
   readonly ROOT_URL = 'https://localhost:7040/api'
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, private cookieService: CookieService, private fileUploadService: FileUploadService) {
+  constructor(private http: HttpClient, private formBuilder: FormBuilder, private cookieService: CookieService, private fileUploadService: FileUploadService, private router: Router) {
     this.myForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', Validators.required],
@@ -46,7 +48,7 @@ export class AddRecipeComponent {
 
       let productsRecipes: { productId: number; }[] = [];
       this.chosenProductsIds.forEach(element => {
-        productsRecipes.push({productId: element});
+        productsRecipes.push({ productId: element });
       });
 
       const requestBody = {
@@ -63,14 +65,15 @@ export class AddRecipeComponent {
             if (this.selectedFile) {
               this.fileUploadService.uploadFile(this.selectedFile, this.postedRecipeId)
                 .then(response => {
-                  console.log(response);
                 })
                 .catch(error => {
-                  console.error(error);
                 });
             }
+            this.router.navigate(['']);
           },
-          error: error => console.error(error)
+          error: error => {
+            this.addingError = error.error;
+          }
         }
       );
     }
@@ -84,8 +87,7 @@ export class AddRecipeComponent {
     if (this.searchTerm.length >= 3) {
       this.http.get<any>(this.ROOT_URL + `/Product/Search`, { params }).subscribe(
         {
-            next: response => {
-            console.log(response);
+          next: response => {
             this.results = response;
           },
           error: error => console.error('Error:', error)
@@ -99,11 +101,11 @@ export class AddRecipeComponent {
   selectProduct(product: any) {
     this.searchTerm = '';
     this.results = [];
-    if (this.chosenProductsIds.includes(product.id)){
+    if (this.chosenProductsIds.includes(product.id)) {
       return;
     }
     this.chosenProductsNames.push(product.name);
     this.chosenProductsIds.push(product.id);
-    
+
   }
 }

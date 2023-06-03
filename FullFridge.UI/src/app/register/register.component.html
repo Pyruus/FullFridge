@@ -4,10 +4,12 @@
             <div class="form-header">Sign up</div>
             <div class="lr-swap">Already have an account? <a href="login" class="lr-swap">Sign in</a></div>
             <input type="email" id="email" formControlName="email" required placeholder="email@example.com">
-            <input type="password" id="password" formControlName="password" required placeholder="Password">
-            <input type="password" id="confirmPassword" formControlName="confirmPassword" required placeholder="Confirm password">
+            <input type="password" id="password" formControlName="password" required placeholder="Password" (blur)="validatePasswords()">
+            <input type="password" id="confirmPassword" formControlName="confirmPassword" required placeholder="Confirm password" (blur)="validatePasswords()">
+            <div *ngIf="!passwordsMatch" class="failInfo">Passwords don't match</div>
             <input type="text" id="name" formControlName="name" required placeholder="Name">
             <input type="text" id="surname" formControlName="surname" required placeholder="Surname">
+            <div *ngIf="registerError" class="failInfo">{{registerError}}</div>
             <button type="submit" [disabled]="myForm.invalid">Sign up</button>
           </form>
     </div>

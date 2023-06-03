@@ -1,6 +1,7 @@
 <div class="main-panel">
     <div class="content">
         <h1>Add a recipe</h1>
+        <div *ngIf="addingError" class="failInfo">{{addingError}}</div>
         <form [formGroup]="myForm" (ngSubmit)="submitForm()" id="addRecipe">
             <input name="name" type="text" formControlName="name" required placeholder="Name">
             <textarea name="description" rows="8" formControlName="description" required

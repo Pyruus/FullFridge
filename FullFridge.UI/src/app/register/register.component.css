@@ -59,3 +59,12 @@ input, textarea{
 .register-container{
     width: 30%;
 }
+
+button:enabled{
+    background: #00A194;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #384847;
+}

@@ -27,10 +27,9 @@ export class FindRecipeComponent {
       this.http.get<any>(this.ROOT_URL + `/Product/Search`, { params }).subscribe(
         {
             next: response => {
-            console.log(response);
             this.results = response;
           },
-          error: error => console.error('Error:', error)
+          error: error => {console.error('Error:', error)}
         }
       );
     } else {
