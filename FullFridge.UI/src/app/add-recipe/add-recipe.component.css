@@ -40,3 +40,11 @@ form>button {
 #choices{
     width: 20em;
 }
+
+@media screen and (max-width: 767px) {
+   #addRecipe{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   }
+  }

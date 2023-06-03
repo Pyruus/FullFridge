@@ -68,3 +68,10 @@ button:enabled{
 button:disabled {
     background: #384847;
 }
+
+
+@media screen and (max-width: 767px) {
+    .register-container{
+        width: 80%;
+    }
+  }

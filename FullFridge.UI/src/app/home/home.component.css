@@ -48,3 +48,25 @@ h1{
     margin-left: auto;
     color: darkred;
 }
+
+@media screen and (max-width: 767px) {
+    .content{
+        grid-template-columns: repeat(1, 0.8fr);
+        grid-gap: 2em;
+        padding: 0;
+        overflow: auto;
+        width: 100vw;
+        justify-content: center;
+    }
+
+    .main-panel{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    nav{
+        width: 100vw;
+        height: 10vh;
+        background: #1E1E1E;
+    }
+}

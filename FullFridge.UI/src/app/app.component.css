@@ -43,3 +43,9 @@ a{
     text-decoration: none;
     display: inline-block;
 }
+
+@media screen and (max-width: 767px) {
+    .button{
+        font-size: 2vh;
+    }
+  }

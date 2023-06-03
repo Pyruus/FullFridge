@@ -64,3 +64,9 @@ nav{
 .dislike{
     color: darkred;
 }
+
+@media screen and (max-width: 767px) {
+    .content > img{
+        width: 80%;
+    }
+  }

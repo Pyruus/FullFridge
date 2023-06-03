@@ -33,3 +33,9 @@
   .results-list li:hover {
     background-color: #e0e0e0;
   }
+  
+  @media screen and (max-width: 767px) {
+    .content{
+      padding-bottom: 3em;
+    }
+  }
