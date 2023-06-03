@@ -74,6 +74,11 @@ namespace FullFridge.API.Controllers
             {
                 return NotFound();
             }
+            var comments = await _context.Comments.Where(c => c.RecipeId == id).ToListAsync();
+            foreach(var comment in comments)
+            {
+                _context.Comments.Remove(comment);
+            }
             _context.Recipes.Remove(recipe);
             await _context.SaveChangesAsync();
 
