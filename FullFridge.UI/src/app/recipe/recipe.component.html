@@ -1,5 +1,6 @@
 <div class = 'main-panel'>
     <div class="content">
+        <fa-icon *ngIf="isUserAdmin()" [icon]="faTrash" size="xl" (click)="deleteRecipe()"></fa-icon>
         <h1>{{recipe?.title}}</h1>
         <img [src]=sanitizedFileUrl>
         <p class="description">{{recipe?.description}} </p>

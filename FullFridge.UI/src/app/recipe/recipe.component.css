@@ -13,3 +13,13 @@
     color: white;
     font-size: 1.2em;
 }
+
+fa-icon{
+    cursor: pointer;
+    color: white;
+    margin-left: 1em;
+}
+
+.content{
+    padding-top: 1em;
+}

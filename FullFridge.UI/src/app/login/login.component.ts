@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
             this.cookieService.set("token", response.token);
             this.cookieService.set("userId", response.id);
             this.cookieService.set("userName", response.name);
+            this.cookieService.set("userRole", response.role);
             this.router.navigate([``]);
           },
           error: error => {
