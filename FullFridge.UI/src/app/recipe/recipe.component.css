@@ -49,3 +49,18 @@ nav{
     justify-content: center;
     align-items: center;
 }
+
+.ratioSection, .likes, .dislikes{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1em;
+}
+
+.like{
+    color: green;
+}
+
+.dislike{
+    color: darkred;
+}

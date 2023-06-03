@@ -1,6 +1,16 @@
 <div class='main-panel'>
     <div class="content">
         <fa-icon *ngIf="isUserAdmin()" [icon]="faTrash" size="xl" (click)="deleteRecipe()"></fa-icon>
+        <div class="ratioSection">
+            <div class="likes">
+                <fa-icon size="2x" [icon]="faLike"></fa-icon>
+                <h1 class="like">{{recipe.likes}}</h1>
+            </div>
+            <div class="dislikes">
+                <fa-icon size="2x" [icon]="faDislike"></fa-icon>
+                <h1 class="dislike">{{recipe.dislikes}}</h1>
+            </div>
+        </div>
         <h1>{{recipe?.title}}</h1>
         <img [src]=sanitizedFileUrl>
         <p class="description">{{recipe?.description}} </p>
@@ -9,8 +19,8 @@
         <form [formGroup]="myForm" (ngSubmit)="submitForm()" id="addCommentForm">
             <textarea name="comment-content" rows="3" formControlName="commentContent" required
                 placeholder="Put your comment here" class="addComment"></textarea>
-                <fa-icon *ngIf="isLike" size="2x" [icon]="faLike" (click)="dislike()"></fa-icon>
-                <fa-icon *ngIf="!isLike" size="2x" [icon]="faDislike" (click)="like()"></fa-icon>
+                <fa-icon *ngIf="isLike" size="2x" [icon]="faLike" (click)="dislike()" class="like"></fa-icon>
+                <fa-icon *ngIf="!isLike" size="2x" [icon]="faDislike" (click)="like()" class="dislike"></fa-icon>
             <input type="submit" [disabled]="myForm.invalid">
         </form>
         <h1>Comments</h1>
