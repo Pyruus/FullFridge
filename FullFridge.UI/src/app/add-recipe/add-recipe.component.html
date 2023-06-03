@@ -3,20 +3,21 @@
         <h1>Add a recipe</h1>
         <form [formGroup]="myForm" (ngSubmit)="submitForm()" id="addRecipe">
             <input name="name" type="text" formControlName="name" required placeholder="Name">
-            <textarea name="description" rows="8" formControlName="description" required placeholder="Put a recipe here"></textarea>
+            <textarea name="description" rows="8" formControlName="description" required
+                placeholder="Put a recipe here"></textarea>
             <input type="file" (change)="onFileSelected($event)">
             <input type="submit" [disabled]="myForm.invalid">
-          </form>
+        </form>
     </div>
     <nav>
         <input type="text" [(ngModel)]="searchTerm" (keyup)="search()" placeholder="Products">
-            <div class="results-container" *ngIf="results.length > 0" >
-                <ul class="results-list">
-                    <li *ngFor="let result of results" (click)="selectProduct(result)">
+        <div class="results-container" *ngIf="results.length > 0">
+            <ul class="results-list">
+                <li *ngFor="let result of results" (click)="selectProduct(result)">
                     {{ result.name }}
-                    </li>
-                </ul>
-            </div>
+                </li>
+            </ul>
+        </div>
         <form class="shopping-list">
             <select multiple name="choices[]" id="choices">
                 <option *ngFor="let product of chosenProductsNames">{{product}}</option>

@@ -1,4 +1,4 @@
-<div class = 'main-panel'>
+<div class='main-panel'>
     <div class="content">
         <fa-icon *ngIf="isUserAdmin()" [icon]="faTrash" size="xl" (click)="deleteRecipe()"></fa-icon>
         <h1>{{recipe?.title}}</h1>
@@ -6,6 +6,14 @@
         <p class="description">{{recipe?.description}} </p>
     </div>
     <nav>
+        <form [formGroup]="myForm" (ngSubmit)="submitForm()" id="addCommentForm">
+            <textarea name="comment-content" rows="3" formControlName="commentContent" required
+                placeholder="Put your comment here" class="addComment"></textarea>
+                <fa-icon *ngIf="isLike" size="2x" [icon]="faLike" (click)="dislike()"></fa-icon>
+                <fa-icon *ngIf="!isLike" size="2x" [icon]="faDislike" (click)="like()"></fa-icon>
+            <input type="submit" [disabled]="myForm.invalid">
+        </form>
+        <h1>Comments</h1>
         <div class="comment" *ngFor="let comment of recipe.comments">
             <h1>{{comment.createdBy.details.name + ' ' + comment.createdBy.details.surname}}</h1>
             <p>{{comment.content}}</p>
