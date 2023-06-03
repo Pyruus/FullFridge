@@ -6,6 +6,9 @@
         <p class="description">{{recipe?.description}} </p>
     </div>
     <nav>
-
+        <div class="comment" *ngFor="let comment of recipe.comments">
+            <h1>{{comment.createdBy.details.name + ' ' + comment.createdBy.details.surname}}</h1>
+            <p>{{comment.content}}</p>
+        </div>
     </nav>
 </div>

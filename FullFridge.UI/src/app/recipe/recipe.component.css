@@ -23,3 +23,17 @@ fa-icon{
 .content{
     padding-top: 1em;
 }
+
+.comment{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: linear-gradient(180deg, #D3F83F 0%, rgba(149, 174, 49, 0.64) 100%);
+    border-radius: 30px;
+    width: 80%;
+}
+
+nav{
+    gap: 1em;
+}
