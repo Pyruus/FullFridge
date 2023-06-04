@@ -1,11 +1,11 @@
-<div class = "main-panel">
-    <div class = "content">
+<div class="main-panel">
+    <div class="content">
         <h1 class>What's in your fridge?</h1>
         <input type="text" [(ngModel)]="searchTerm" (keyup)="search()">
-        <div class="results-container" *ngIf="results.length > 0" >
+        <div class="results-container" *ngIf="results.length > 0">
             <ul class="results-list">
                 <li *ngFor="let result of results" (click)="selectProduct(result)">
-                {{ result.name }}
+                    {{ result.name }}
                 </li>
             </ul>
         </div>
@@ -17,5 +17,7 @@
             </select>
             <input type="submit" value="Find" (click)="searchByProducts()">
         </form>
+        <input type="checkbox" [(ngModel)]="moreProducts"> Use more ingredients
+        <input type="checkbox" [(ngModel)]="allProducts"> Use all ingredients
     </nav>
 </div>

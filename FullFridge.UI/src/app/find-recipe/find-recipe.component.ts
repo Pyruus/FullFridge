@@ -13,6 +13,8 @@ export class FindRecipeComponent {
   chosenProductsIds: number[] = [];
   searchTerm: string = '';
   results: any[] = [];
+  allProducts: boolean = false;
+  moreProducts: boolean = true;
 
   
 
@@ -49,7 +51,9 @@ export class FindRecipeComponent {
   
   searchByProducts(){
     const params = {
-      productIds: this.chosenProductsIds
+      productIds: this.chosenProductsIds,
+      allProducts: this.allProducts,
+      otherProducts: this.moreProducts
     }
 
     if (this.chosenProductsIds.length > 0) {
