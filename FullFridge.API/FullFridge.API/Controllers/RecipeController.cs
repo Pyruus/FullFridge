@@ -115,9 +115,9 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Recipe/Products
         [HttpGet("Products")]
-        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipesByProducts([FromQuery] List<int> productIds, bool allProducts, bool otherProducts)
+        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipesByProducts([FromQuery] List<int?> productIds, bool allProducts, bool otherProducts)
         {
-            var result = await _recipeService.GetRecipesByProductList(productIds);
+            var result = await _recipeService.GetRecipesByProductList(productIds, allProducts, otherProducts);
 
             return Ok(result);
         }

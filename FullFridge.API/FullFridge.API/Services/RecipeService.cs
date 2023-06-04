@@ -1,6 +1,7 @@
 ﻿using FullFridge.API.Context;
 using FullFridge.API.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace FullFridge.API.Services
             return _context.Recipes.Any(e => e.Id == id);
         }
 
-        public async Task<List<RecipeListDTO>> GetRecipesByProductList(List<int> productIds)
+        public async Task<List<RecipeListDTO>> GetRecipesByProductList(List<int?> productIds, bool allProducts, bool otherProducts)
         {
             var recipes = await _context.Recipes
             .OrderByDescending(recipe => recipe.Likes - recipe.Dislikes)
@@ -29,7 +30,11 @@ namespace FullFridge.API.Services
 
             _context.ChangeTracker.LazyLoadingEnabled = false;
 
-            var filteredRecipes = recipes.Where(recipe =>
+            List<RecipeListDTO> filteredRecipes;
+
+            if(!allProducts && !otherProducts)
+            {
+                filteredRecipes = recipes.Where(recipe =>
                 productIds.All(productId =>
                     recipe.ProductsRecipes.Any(pr => pr.ProductId == productId)))
                     .Select(recipes => new RecipeListDTO
@@ -42,6 +47,61 @@ namespace FullFridge.API.Services
                         Image = recipes.Image
                     })
                 .ToList();
+            }
+            else if(otherProducts && !allProducts)
+            {
+                filteredRecipes = recipes.Where(recipe =>
+                productIds.Any(productId =>
+                    recipe.ProductsRecipes.Any(pr => pr.ProductId == productId)))
+                    .Select(recipes => new RecipeListDTO
+                    {
+                        Id = recipes.Id,
+                        Title = recipes.Title,
+                        Ratio = recipes.Likes - recipes.Dislikes,
+                        Likes = recipes.Likes,
+                        Dislikes = recipes.Dislikes,
+                        Image = recipes.Image
+                    })
+                .ToList();
+            }
+            else if(!otherProducts && allProducts)
+            {
+                var providedProductSet = new HashSet<int?>(productIds);
+                filteredRecipes = recipes.Where(recipe =>
+                    recipe.ProductsRecipes
+                        .Select(pr => pr.ProductId)
+                        .ToHashSet()
+                        .SetEquals(providedProductSet))
+                        .Select(recipes => new RecipeListDTO
+                        {
+                            Id = recipes.Id,
+                            Title = recipes.Title,
+                            Ratio = recipes.Likes - recipes.Dislikes,
+                            Likes = recipes.Likes,
+                            Dislikes = recipes.Dislikes,
+                            Image = recipes.Image
+                        })
+                    .ToList();
+            }
+            else
+            {
+                var providedProductSet = new HashSet<int?>(productIds);
+                filteredRecipes = recipes.Where(recipe =>
+                    recipe.ProductsRecipes
+                        .Select(pr => pr.ProductId)
+                        .ToHashSet()
+                        .IsSubsetOf(providedProductSet))
+                        .Select(recipes => new RecipeListDTO
+                        {
+                            Id = recipes.Id,
+                            Title = recipes.Title,
+                            Ratio = recipes.Likes - recipes.Dislikes,
+                            Likes = recipes.Likes,
+                            Dislikes = recipes.Dislikes,
+                            Image = recipes.Image
+                        })
+                    .ToList();
+            }            
 
             _context.ChangeTracker.LazyLoadingEnabled = true;
 
@@ -83,7 +143,7 @@ namespace FullFridge.API.Services
     public interface IRecipeService
     {
         bool RecipeExists(int id);
-        Task<List<RecipeListDTO>> GetRecipesByProductList(List<int> productIds);
+        Task<List<RecipeListDTO>> GetRecipesByProductList(List<int?> productIds, bool allProducts, bool otherProducts);
         Task<List<RecipeListDTO>> SearchRecipeByRegex(string regex);
         Task<List<RecipeListDTO>> GetTopRecipes();
     }
