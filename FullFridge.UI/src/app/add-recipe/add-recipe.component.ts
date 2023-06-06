@@ -55,7 +55,8 @@ export class AddRecipeComponent {
         title: formData.name,
         description: formData.description,
         createdById: this.cookieService.get("userId") || null,
-        productsRecipes: productsRecipes
+        productsRecipes: productsRecipes,
+        image: "default.jpg"
       };
 
       this.http.post(this.ROOT_URL + `/Recipe`, requestBody, { headers }).subscribe(
