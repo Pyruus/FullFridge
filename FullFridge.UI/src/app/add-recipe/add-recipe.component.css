@@ -41,6 +41,11 @@ form>button {
     width: 20em;
 }
 
+.file{
+    color: white;
+    border-color: white;
+}
+
 @media screen and (max-width: 767px) {
    #addRecipe{
     display: flex;
