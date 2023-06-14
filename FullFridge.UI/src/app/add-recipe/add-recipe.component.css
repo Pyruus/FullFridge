@@ -44,6 +44,7 @@ form>button {
 .file{
     color: white;
     border-color: white;
+    padding-left: 1em;
 }
 
 @media screen and (max-width: 767px) {
