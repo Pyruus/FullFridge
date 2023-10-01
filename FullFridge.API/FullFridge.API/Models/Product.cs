@@ -1,19 +1,14 @@
-﻿namespace FullFridge.API.Models
+﻿using System.Text.Json.Serialization;
+
+namespace FullFridge.API.Models
 {
     public class Product
     {
-        public int? Id { get; set; }
-        public string Name { get; set; }
-        public int? Calories { get; set; }
-        public string? Category { get; set; }
-        public ICollection<ProductsRecipes> ProductsRecipes { get; set; }
-    }
-
-    public class ProductDTO
-    {
-        public int? Id { get; set; }
-        public string Name { get; set; }
-        public int? Calories { get; set; }
-        public string? Category { get; set; }
+        [JsonPropertyName("idIngredient")]
+        public string? Id { get; set; }
+        [JsonPropertyName("strIngredient")]
+        public string? Name { get; set; }
+        [JsonPropertyName("strDescription")]
+        public string? Description { get; set; }
     }
 }

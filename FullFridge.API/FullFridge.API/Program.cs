@@ -1,9 +1,13 @@
-using FullFridge.API.Context;
+using FullFridge.Model;
 using FullFridge.API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FullFridge.API.Services.MealDb;
+using FullFridge.API.Config;
+using System.Data;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,12 +42,13 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<FullFridgeContext>(
-    o => o.UseNpgsql(builder.Configuration.GetConnectionString("FullFridgeDb"))
-    );
+builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("ConnectionStrings"));
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>(); 
+builder.Services.AddScoped<IMealDbHttpClient, MealDbHttpClient>();
+builder.Services.AddSingleton<IDbConnection>(_ => new NpgsqlConnection(builder.Configuration.GetSection("ConnectionStrings")["FullFridgeDb"]));
+builder.Services.AddSingleton<IDapperRepository, DapperRepository>();
 builder.Services.AddCors(options => {
     options.AddDefaultPolicy(builder => {
         builder.AllowAnyOrigin()

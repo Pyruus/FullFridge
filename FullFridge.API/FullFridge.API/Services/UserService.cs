@@ -1,20 +1,23 @@
-﻿using FullFridge.API.Context;
-using FullFridge.API.Models;
+﻿using FullFridge.API.Models;
+using FullFridge.Model;
+using FullFridge.Model.Helpers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FullFridge.API.Services
 {
     public class UserService: IUserService
     {
-        private readonly FullFridgeContext _context;
+        private readonly IDapperRepository _repository;
 
-        public UserService(FullFridgeContext context)
+        public UserService(IDapperRepository repository)
         {
-            _context = context;
+            _repository= repository;
         }
         public async Task<UserDTO> Authenticate(string email, string password)
         {
-            var user = await _context.Users.Include(u => u.Details).SingleOrDefaultAsync(x => x.Email == email);
+            var user = await _repository.QueryFirstOrDefault<User>(
+                SqlQueryHelper.GetUserFromEmail, new { email });
 
             if (user == null || !VerifyPassword(password, user.Password))
             {
@@ -25,15 +28,33 @@ namespace FullFridge.API.Services
             {
                 Id = user.Id,
                 Email = user.Email,
-                Name = user.Details.Name,
-                Surname = user.Details.Surname,
+                Name = user.Name,
+                Surname = user.Surname,
                 Role = user.Role
             };
         }
 
-        public async Task<bool> UserExists(string email)
+        public async Task<Result> RegisterUser(User user)
         {
-            return await _context.Users.AnyAsync(u => u.Email == email);
+            if (await UserExists(user.Email))
+            {
+                return new Result(StatusCodes.Status400BadRequest, "User already exists");
+            }
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
+            await _repository.Execute(
+                SqlQueryHelper.InsertUser, user);
+
+            return new Result(StatusCodes.Status201Created);
+        }
+
+        private async Task<bool> UserExists(string email)
+        {
+            var user = await _repository.QueryFirstOrDefault<User>(
+                SqlQueryHelper.GetUserFromEmail, new { email });
+
+            return user != null;
         }
 
         private static bool VerifyPassword(string password, string passwordHash)
@@ -45,7 +66,7 @@ namespace FullFridge.API.Services
     public interface IUserService
     {
         Task<UserDTO> Authenticate(string email, string password);
-        Task<bool> UserExists(string email);
+        Task<Result> RegisterUser(User user);
 
     }
 }

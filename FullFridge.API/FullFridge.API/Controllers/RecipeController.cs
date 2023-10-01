@@ -1,10 +1,6 @@
-﻿using FullFridge.API.Context;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using FullFridge.API.Models;
-using Microsoft.EntityFrameworkCore;
 using FullFridge.API.Services;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FullFridge.API.Controllers
@@ -13,44 +9,24 @@ namespace FullFridge.API.Controllers
     [ApiController]
     public class RecipeController : ControllerBase
     {
-        private readonly FullFridgeContext _context;
         private readonly IRecipeService _recipeService;
-        public RecipeController(FullFridgeContext context, IRecipeService recipeService)
+        public RecipeController(IRecipeService recipeService)
         {
-            _context= context;
             _recipeService = recipeService;
-        }
-
-        //GET: api/Recipe
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
-        {
-            return await _context.Recipes.ToListAsync();
         }
 
         //GET: api/Recipe/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Recipe>> GetRecipeById(int id)
+        public async Task<ActionResult<Recipe>> GetRecipeById(Guid id)
         {
-            var recipe = await _context.Recipes.SingleOrDefaultAsync(r => r.Id == id);
-            if (recipe == null)
+            var recipe = _recipeService.GetRecipeByID(id);
+
+            if(recipe == null)
             {
                 return NotFound();
             }
-            var comments = await _context.Comments.Include(c => c.CreatedBy).ThenInclude(u => u.Details).Where(c => c.RecipeId == recipe.Id).ToListAsync();
 
-            var recipeDetails = new RecipeDetailsDTO
-            {
-                Id = recipe.Id,
-                Title = recipe.Title,
-                Description = recipe.Description,
-                Image = recipe.Image,
-                Ratio = recipe.Likes - recipe.Dislikes,
-                Likes = recipe.Likes,
-                Dislikes = recipe.Dislikes,
-                Comments = comments
-            };
-            return Ok(recipeDetails);
+            return Ok(recipe);
         }
 
         //POST: api/Recipe
@@ -58,59 +34,24 @@ namespace FullFridge.API.Controllers
         [Authorize]
         public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
         {
-            _context.Recipes.Add(recipe);
-            await _context.SaveChangesAsync();
+            var newId = _recipeService.SaveRecipe(recipe);
 
-            return Ok(recipe.Id);
+            if(newId == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(newId);
         }
 
         //DELETE: api/Recipe/{id}
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<ActionResult> DeleteRecipe(int id)
+        public async Task<ActionResult> DeleteRecipe(Guid id)
         {
-            var recipe = await _context.Recipes.FindAsync(id);
-            if(recipe == null)
-            {
-                return NotFound();
-            }
-            var comments = await _context.Comments.Where(c => c.RecipeId == id).ToListAsync();
-            foreach(var comment in comments)
-            {
-                _context.Comments.Remove(comment);
-            }
-            _context.Recipes.Remove(recipe);
-            await _context.SaveChangesAsync();
+            await _recipeService.DeleteRecipe(id);
 
             return Ok();
-        }
-
-        //PUT: api/Recipe/{id}
-        [HttpPut("{id}")]
-        [Authorize]
-        public async Task<ActionResult> PutRecipe(int id, Recipe recipe)
-        {
-            recipe.Id = id;
-
-            _context.Entry(recipe).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_recipeService.RecipeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         //GET: api/Recipe/Products
@@ -124,16 +65,16 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Recipe/Top
         [HttpGet("Top")]
-        public async Task<ActionResult<IEnumerable<RecipeListDTO>>> GetTopRecipes()
+        public async Task<ActionResult<IEnumerable<Recipe>>> GetTopRecipes()
         {
-            return await _recipeService.GetTopRecipes();
+            return Ok(await _recipeService.GetTopRecipes());
         }
 
         //GET: api/Recipe/Search
         [HttpGet("Search")]
-        public async Task<ActionResult<IEnumerable<RecipeListDTO>>> SeacrhRecipes(string searchString)
+        public async Task<ActionResult<IEnumerable<Recipe>>> SeacrhRecipes(string searchString)
         {
-            return await _recipeService.SearchRecipeByRegex(searchString);
+            return Ok(await _recipeService.SearchRecipeByRegex(searchString));
         }
 
         //POST: api/Recipe/Comment
@@ -141,59 +82,15 @@ namespace FullFridge.API.Controllers
         [Authorize]
         public async Task<ActionResult> PostComment(Comment comment)
         {
-            var existingUser = await _context.Users.FindAsync(comment.CreatedById);
-            if (existingUser == null)
-            {
-                return BadRequest("User does not exist");
-            }
+            var result = await _recipeService.CommentRecipe(comment);
 
-            var existingComment = await _context.Comments.Where(c => c.CreatedById == comment.CreatedById).Where(c => c.RecipeId == comment.RecipeId).ToListAsync();
-            if (existingComment.Count != 0)
-            {
-                return BadRequest("You have already commented on this recipe");
-            }
-
-            var commentedRecipe = await _context.Recipes.SingleOrDefaultAsync(recipe => recipe.Id == comment.RecipeId);
-            if (commentedRecipe == null)
-            {
-                return NotFound("Recipe doesnt exist");
-            }
-
-            if (comment.IsLike)
-            {
-                commentedRecipe.Likes++;
-            }
-            else
-            {
-                commentedRecipe.Dislikes++;
-            }
-
-            _context.Update(commentedRecipe);
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-
-        //DELETE: api/Recipe/Comment/{id}
-        [HttpDelete("Comment/{id}")]
-        [Authorize]
-        public async Task<ActionResult> DeleteComment(int id)
-        {
-            var comment = await _context.Comments.FindAsync(id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-            _context.Comments.Remove(comment);
-            await _context.SaveChangesAsync();
-
-            return Ok();
+            return StatusCode(result.Status, result.Message);
         }
 
         //POST: api/Recipe/File/{recipeId}
         [HttpPost("File/{recipeId}")]
         //[Authorize]
-        public async Task<IActionResult> Upload(int recipeId, IFormFile file)
+        public async Task<IActionResult> Upload(Guid recipeId, IFormFile file)
         {
             if (file != null && file.Length > 0)
             {
@@ -211,14 +108,7 @@ namespace FullFridge.API.Controllers
                     file.CopyTo(fileStream);
                 }
 
-                var recipe = await _context.Recipes.SingleOrDefaultAsync(r => r.Id == recipeId);
-                if (recipe == null)
-                {
-                    return NotFound("Recipe not found");
-                }
-                recipe.Image = fileName;
-
-                await _context.SaveChangesAsync();
+                var result = await _recipeService.AssignImage(recipeId, fileName);
                 return Ok(new { fileName });
             }
 

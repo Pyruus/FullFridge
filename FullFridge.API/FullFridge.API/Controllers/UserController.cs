@@ -1,12 +1,8 @@
-﻿using FullFridge.API.Context;
-using FullFridge.API.Models;
+﻿using FullFridge.API.Models;
 using FullFridge.API.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -16,13 +12,11 @@ namespace FullFridge.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly FullFridgeContext _context;
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
 
-        public UserController(FullFridgeContext context, IUserService userService, IConfiguration configuration)
+        public UserController(IUserService userService, IConfiguration configuration)
         {
-            _context = context;
             _userService = userService;
             _configuration = configuration;
         }
@@ -31,16 +25,9 @@ namespace FullFridge.API.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(User user)
         {
-            if (await _userService.UserExists(user.Email))
-            {
-                return BadRequest("User already exists");
-            }
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            var result = await _userService.RegisterUser(user);
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return Ok();
+            return StatusCode(result.Status, result.Message);
         }
 
         //GET: api/User/Login

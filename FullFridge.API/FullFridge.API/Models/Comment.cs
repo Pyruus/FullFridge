@@ -2,12 +2,22 @@
 {
     public class Comment
     {
-        public int? Id { get; set; }
+        public Guid Id { get; set; }
         public string Content { get; set; }
-        public bool IsLike { get; set; }
-        public User? CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public int? RecipeId { get; set; }
-        public int? CreatedById { get; set; }
+        public Guid RecipeId { get; set; }
+        public Guid? CreatedById { get; set; }
+        public double Rating { get; set; } 
+    }
+
+    public class CommentDTO
+    {
+        public Guid Id { get; set; }
+        public string Content { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public double Rating { get; set; }
+        public string? Email { get; set; }
+        public string? Name { get; set; }
+        public string? Surname { get; set; }
     }
 }

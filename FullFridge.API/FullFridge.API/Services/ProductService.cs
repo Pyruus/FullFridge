@@ -1,5 +1,5 @@
-﻿using FullFridge.API.Context;
-using FullFridge.API.Models;
+﻿using FullFridge.API.Models;
+using FullFridge.API.Services.MealDb;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
@@ -7,17 +7,17 @@ namespace FullFridge.API.Services
 {
     public class ProductService: IProductService
     {
-        private readonly FullFridgeContext _context;
+        private readonly IMealDbHttpClient _mealDbHttpClient;
 
-        public ProductService(FullFridgeContext context)
+        public ProductService(IMealDbHttpClient mealDbHttpClient)
         {
-            _context = context;
+            _mealDbHttpClient = mealDbHttpClient;
         }
 
-        public async Task<List<ProductDTO>> SearchProductByRegex(string regex)
+        public async Task<List<Product>> SearchProductByRegex(string regex)
         {
-            var products = await _context.Products.ToListAsync();
-            var searchResults = products.Where(product => Regex.IsMatch(product.Name.ToLower(), regex.ToLower())).Select(products => new ProductDTO { Id = products.Id, Name = products.Name, Calories = products.Calories}).ToList();
+            var products = await _mealDbHttpClient.GetProducts();
+            var searchResults = products.Where(product => Regex.IsMatch(product.Name.ToLower(), regex.ToLower())).ToList();
 
             return searchResults;
         }
@@ -25,6 +25,6 @@ namespace FullFridge.API.Services
 
     public interface IProductService
     {
-        Task<List<ProductDTO>> SearchProductByRegex(string regex);
+        Task<List<Product>> SearchProductByRegex(string regex);
     }
 }

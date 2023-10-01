@@ -1,5 +1,4 @@
-﻿using FullFridge.API.Context;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FullFridge.API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +12,9 @@ namespace FullFridge.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly FullFridgeContext _context;
         private readonly IProductService _productService;
-        public ProductController(FullFridgeContext context, IProductService productService)
+        public ProductController(IProductService productService)
         {
-            _context= context;
             _productService = productService;
         }
 
@@ -26,7 +23,8 @@ namespace FullFridge.API.Controllers
         [Authorize]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            //TODO after productService refactor
+            return new List<Product>();
         }
 
         //GET: api/Product/{id}
@@ -34,46 +32,13 @@ namespace FullFridge.API.Controllers
         [Authorize]
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
-            var product = await _context.Products.SingleOrDefaultAsync(r => r.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return Ok(product);
-        }
-
-        //POST: api/Product
-        [HttpPost]
-        [Authorize]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
-        {
-            //product.CreatedAt = DateTime.Now;
-
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        //DELETE: api/Product/{id}
-        [HttpDelete("{id}")]
-        [Authorize]
-        public async Task<ActionResult> DeleteProduct(int id)
-        {
-            var product = await _context.Products.FindAsync(id);
-            if(product == null)
-            {
-                return NotFound();
-            }
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-
+            //TODO after productService refactor
             return Ok();
         }
 
         //GET: api/Product/Search
         [HttpGet("Search")]
-        public async Task<ActionResult<List<ProductDTO>>> SearchProducts(string searchString)
+        public async Task<ActionResult<List<Product>>> SearchProducts(string searchString)
         {
             var searchResult = await _productService.SearchProductByRegex(searchString);
 
