@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using FullFridge.API.Models;
-using Microsoft.EntityFrameworkCore;
 using FullFridge.API.Services;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace FullFridge.API.Controllers
 {
@@ -20,20 +16,20 @@ namespace FullFridge.API.Controllers
 
         //GET: api/Product
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            //TODO after productService refactor
-            return new List<Product>();
+            var products = await _productService.GetProducts();
+
+            return products;
         }
 
         //GET: api/Product/{id}
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
-            //TODO after productService refactor
-            return Ok();
+            var product = await _productService.GetProductById(id);
+
+            return product;
         }
 
         //GET: api/Product/Search
