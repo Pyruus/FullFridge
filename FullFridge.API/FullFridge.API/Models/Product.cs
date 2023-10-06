@@ -11,10 +11,4 @@ namespace FullFridge.API.Models
         [JsonPropertyName("strDescription")]
         public string? Description { get; set; }
     }
-
-    public class ProductListResponse
-    {
-        [JsonPropertyName("meals")]
-        public List<Product> Products { get;set; }
-    }
 }

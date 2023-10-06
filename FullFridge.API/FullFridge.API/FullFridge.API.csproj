@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\MealDb\" />
 	  <ProjectReference Include="..\FullFridge.Model\FullFridge.Model.csproj" />
   </ItemGroup>
 
