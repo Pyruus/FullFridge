@@ -1,4 +1,6 @@
 ﻿using FullFridge.API.Models;
+using FullFridge.API.Models.MealDb;
+using FullFridge.API.Services.MealDb;
 using FullFridge.Model;
 using FullFridge.Model.Helpers;
 
@@ -7,9 +9,11 @@ namespace FullFridge.API.Services
     public class RecipeService : IRecipeService
     {
         private readonly IDapperRepository _repository;
-        public RecipeService(IDapperRepository repository)
+        private readonly IMealDbHttpClient _mealDbHttpClient;
+        public RecipeService(IDapperRepository repository, IMealDbHttpClient mealDbHttpClient)
         {
             _repository = repository;
+            _mealDbHttpClient = mealDbHttpClient;
         }
 
         public async Task<IEnumerable<RecipeListDTO>> GetRecipesByProductList(List<int?> productIds, bool allProducts, bool otherProducts)
@@ -175,6 +179,17 @@ namespace FullFridge.API.Services
             return new Result(StatusCodes.Status200OK);
         }
 
+        public async Task FetchMealDbRecipes()
+        {
+            var categories = await _mealDbHttpClient.GetCategories();
+            var recipes = await _mealDbHttpClient.GetRecipesFromCategories(categories);
+
+            foreach(var recipe in recipes)
+            {
+                var details = await _mealDbHttpClient.GetRecipeDetails(recipe.Id);
+            }
+        }
+
         #region private methods
         private async Task<bool> RecipeExists(Guid id)
         {
@@ -184,6 +199,11 @@ namespace FullFridge.API.Services
                     id
                 });
             return recipeId != null;
+        }
+
+        private async Task InsertRecipeToDb(MealDbRecipeDetails details)
+        {
+
         }
         #endregion
     }
@@ -198,5 +218,6 @@ namespace FullFridge.API.Services
         Task DeleteRecipe(Guid id);
         Task<Result> CommentRecipe(Comment comment);
         Task<Result> AssignImage(Guid id, string fileName);
+        Task FetchMealDbRecipes();
     }
 }

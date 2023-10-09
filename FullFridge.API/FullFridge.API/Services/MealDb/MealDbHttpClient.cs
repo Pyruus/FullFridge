@@ -41,6 +41,16 @@ namespace FullFridge.API.Services.MealDb
 
             return recipes;
         }
+
+        public async Task<MealDbRecipeDetails> GetRecipeDetails(string id)
+        {
+            var client = new RestClient($"{mealDbUrl}lookup.php?i={id}");
+            var request = new RestRequest();
+            request.AddHeader("Accept", "application/json");
+            var response = await client.ExecuteAsync<MealDbList<MealDbRecipeDetails>>(request);
+
+            return response.Data.Values[0];
+        }
     }
 
     public interface IMealDbHttpClient
@@ -48,5 +58,6 @@ namespace FullFridge.API.Services.MealDb
         Task<List<Product>> GetProducts();
         Task<List<Categories>> GetCategories();
         Task<List<MealDbRecipeCategory>> GetRecipesFromCategories(List<Categories> categories);
+        Task<MealDbRecipeDetails> GetRecipeDetails(string id);
     }
 }
