@@ -138,6 +138,14 @@ namespace FullFridge.API.Controllers
             return File(fileBytes, GetContentType(fileExtension));
         }
 
+        [HttpPost("MealDbRecipes")]
+        public async Task<IActionResult> FetchMealDbRecipes()
+        {
+            await _recipeService.FetchMealDbRecipes();
+
+            return Ok();
+        }
+
         private string GetContentType(string fileExtension)
         {
             // Map the file extension to the appropriate content type

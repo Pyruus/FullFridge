@@ -22,45 +22,45 @@ namespace FullFridge.API.Models.MealDb
         public string? Tags { get; set; }
         [JsonPropertyName("strYoutube")]
         public string? YoutubeUrl { get; set; }
-        [JsonPropertyName("string?redient1")]
+        [JsonPropertyName("strIngredient1")]
         public string? Ingredient1 { get; set; }
-        [JsonPropertyName("string?redient2")]
+        [JsonPropertyName("strIngredient2")]
         public string? Ingredient2 { get; set; }
-        [JsonPropertyName("string?redient3")]
+        [JsonPropertyName("strIngredient3")]
         public string? Ingredient3 { get; set; }
-        [JsonPropertyName("string?redient4")]
+        [JsonPropertyName("strIngredient4")]
         public string? Ingredient4 { get; set; }
-        [JsonPropertyName("string?redient5")]
+        [JsonPropertyName("strIngredient5")]
         public string? Ingredient5 { get; set; }
-        [JsonPropertyName("string?redient6")]
+        [JsonPropertyName("strIngredient6")]
         public string? Ingredient6 { get; set; }
-        [JsonPropertyName("string?redient7")]
+        [JsonPropertyName("strIngredient7")]
         public string? Ingredient7 { get; set; }
-        [JsonPropertyName("string?redient8")]
+        [JsonPropertyName("strIngredient8")]
         public string? Ingredient8 { get; set; }
-        [JsonPropertyName("string?redient9")]
+        [JsonPropertyName("strIngredient9")]
         public string? Ingredient9 { get; set; }
-        [JsonPropertyName("string?redient10")]
+        [JsonPropertyName("strIngredient10")]
         public string? Ingredient10 { get; set; }
-        [JsonPropertyName("string?redient11")]
+        [JsonPropertyName("strIngredient11")]
         public string? Ingredient11 { get; set; }
-        [JsonPropertyName("string?redient12")]
+        [JsonPropertyName("strIngredient12")]
         public string? Ingredient12 { get; set; }
-        [JsonPropertyName("string?redient13")]
+        [JsonPropertyName("strIngredient13")]
         public string? Ingredient13 { get; set; }
-        [JsonPropertyName("string?redient14")]
+        [JsonPropertyName("strIngredient14")]
         public string? Ingredient14 { get; set; }
-        [JsonPropertyName("string?redient15")]
+        [JsonPropertyName("strIngredient15")]
         public string? Ingredient15 { get; set; }
-        [JsonPropertyName("string?redient16")]
+        [JsonPropertyName("strIngredient16")]
         public string? Ingredient16 { get; set; }
-        [JsonPropertyName("string?redient17")]
+        [JsonPropertyName("strIngredient17")]
         public string? Ingredient17 { get; set; }
-        [JsonPropertyName("string?redient18")]
+        [JsonPropertyName("strIngredient18")]
         public string? Ingredient18 { get; set; }
-        [JsonPropertyName("string?redient19")]
+        [JsonPropertyName("strIngredient19")]
         public string? Ingredient19 { get; set; }
-        [JsonPropertyName("string?redient20")]
+        [JsonPropertyName("strIngredient20")]
         public string? Ingredient20 { get; set; }
         [JsonPropertyName("strMeasure1")]
         public string? Measure1 { get; set; }

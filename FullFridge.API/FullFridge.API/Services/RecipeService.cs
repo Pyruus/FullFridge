@@ -10,10 +10,12 @@ namespace FullFridge.API.Services
     {
         private readonly IDapperRepository _repository;
         private readonly IMealDbHttpClient _mealDbHttpClient;
-        public RecipeService(IDapperRepository repository, IMealDbHttpClient mealDbHttpClient)
+        private readonly IProductService _productService;
+        public RecipeService(IDapperRepository repository, IMealDbHttpClient mealDbHttpClient, IProductService productService)
         {
             _repository = repository;
             _mealDbHttpClient = mealDbHttpClient;
+            _productService = productService;
         }
 
         public async Task<IEnumerable<RecipeListDTO>> GetRecipesByProductList(List<int?> productIds, bool allProducts, bool otherProducts)
@@ -183,10 +185,23 @@ namespace FullFridge.API.Services
         {
             var categories = await _mealDbHttpClient.GetCategories();
             var recipes = await _mealDbHttpClient.GetRecipesFromCategories(categories);
+            var products = await _productService.GetProducts();
 
             foreach(var recipe in recipes)
             {
                 var details = await _mealDbHttpClient.GetRecipeDetails(recipe.Id);
+                var newRecipe = new Recipe(details, products);
+
+                var id = await _repository.QueryFirstOrDefault<Guid>(
+                    SqlQueryHelper.InsertMealDbRecipe, new
+                    {
+                        Title = newRecipe.Title,
+                        Description = newRecipe.Description,
+                        Image = newRecipe.Image,
+                        MealDbId = newRecipe.MealDbId
+                    });
+
+                await InsertProducts(newRecipe.Products, id);
             }
         }
 
@@ -201,9 +216,20 @@ namespace FullFridge.API.Services
             return recipeId != null;
         }
 
-        private async Task InsertRecipeToDb(MealDbRecipeDetails details)
+        private async Task InsertProducts(List<int?> products, Guid id)
         {
-
+            foreach(var product in products)
+            {
+                if (product != null)
+                {
+                    await _repository.Execute(
+                        SqlQueryHelper.InsertRecipeProduct, new
+                        {
+                            RecipeId = id,
+                            ProductId = product
+                        });
+                }
+            }
         }
         #endregion
     }

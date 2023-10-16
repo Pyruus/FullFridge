@@ -66,5 +66,14 @@
 
         public static string AssignImage =>
             "UPDATE Recipes SET Image = @fileName WHERE Id = id";
+
+        public static string InsertMealDbRecipe =>
+            @"INSERT INTO recipes (title, description, image, rating, mealdb_id)
+              VALUES (@Title, @Description, @Image, 0, @MealDbId)
+              RETURNING id";
+
+        public static string InsertRecipeProduct =>
+            @"INSERT INTO recipes_products (recipe_id, product_id)
+              VALUES (@RecipeId, @ProductId)";
     }
 }
