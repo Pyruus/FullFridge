@@ -95,7 +95,7 @@ namespace FullFridge.API.Services
         public async Task<IEnumerable<Recipe>> SearchRecipeByRegex(string regex)
         {
             var recipes = await _repository.Query<Recipe>(
-                SqlQueryHelper.SearchRecipesByRegex, new { regex });
+                SqlQueryHelper.SearchRecipesByRegex, new { regex = string.Format("%{0}%", regex) });
 
             return recipes;
         }
@@ -151,7 +151,13 @@ namespace FullFridge.API.Services
             }
 
             await _repository.Execute(
-                SqlQueryHelper.InsertComment, new { comment });
+                SqlQueryHelper.InsertComment, 
+                new {
+                    comment.Content,
+                    comment.CreatedById,
+                    comment.RecipeId,
+                    comment.Rating
+                });
 
             var currentRating = await _repository.QueryFirstOrDefault<double>(
                 SqlQueryHelper.GetRating, new { comment.RecipeId });

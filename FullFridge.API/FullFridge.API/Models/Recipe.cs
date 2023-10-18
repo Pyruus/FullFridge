@@ -15,6 +15,8 @@ namespace FullFridge.API.Models
         public double? Rating { get; set; }
         public IEnumerable<CommentDTO> Comments { get; set; }
         public int? MealDbId { get; set; }
+
+        public Recipe() { }
         
         public Recipe(MealDbRecipeDetails recipeDetails, List<Product> products)
         {

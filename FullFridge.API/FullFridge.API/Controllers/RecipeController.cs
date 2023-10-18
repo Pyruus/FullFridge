@@ -19,7 +19,7 @@ namespace FullFridge.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Recipe>> GetRecipeById(Guid id)
         {
-            var recipe = _recipeService.GetRecipeByID(id);
+            var recipe = await _recipeService.GetRecipeByID(id);
 
             if(recipe == null)
             {
@@ -34,7 +34,7 @@ namespace FullFridge.API.Controllers
         [Authorize]
         public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
         {
-            var newId = _recipeService.SaveRecipe(recipe);
+            var newId = await _recipeService.SaveRecipe(recipe);
 
             if(newId == null)
             {
@@ -79,7 +79,7 @@ namespace FullFridge.API.Controllers
 
         //POST: api/Recipe/Comment
         [HttpPost("Comment")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult> PostComment(Comment comment)
         {
             var result = await _recipeService.CommentRecipe(comment);

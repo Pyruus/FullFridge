@@ -8,6 +8,8 @@ using FullFridge.API.Services.MealDb;
 using FullFridge.API.Config;
 using System.Data;
 using Npgsql;
+using Dapper;
+using FullFridge.Model.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +58,8 @@ builder.Services.AddCors(options => {
                .AllowAnyHeader();
     });
 });
+
+SqlMapper.AddTypeHandler(new IntArrayToListTypeHandler());
 
 var app = builder.Build();
 
