@@ -62,7 +62,7 @@
             @"SELECT COUNT(id) FROM comments WHERE recipe_id = @RecipeId";
 
         public static string AlreadyCommented =>
-            "@SELECT id FROM comments WHERE recipe_id = @RecipeId AND created_by_id = @CreatedById";
+            @"SELECT id FROM comments WHERE recipe_id = @RecipeId AND created_by_id = @CreatedById";
 
         public static string AssignImage =>
             "UPDATE recipes SET image = @fileName WHERE id = @id";

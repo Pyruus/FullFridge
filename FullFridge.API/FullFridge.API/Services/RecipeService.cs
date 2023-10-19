@@ -113,6 +113,11 @@ namespace FullFridge.API.Services
             var recipe = await _repository.QueryFirstOrDefault<Recipe>(
                 SqlQueryHelper.GetRecipeById, new { id });
 
+            if(recipe == null)
+            {
+                return recipe;
+            }
+
             recipe.Comments = await _repository.Query<CommentDTO>(
                 SqlQueryHelper.GetRecipeComments, new { recipeId = recipe.Id });
 
@@ -135,10 +140,10 @@ namespace FullFridge.API.Services
 
         public async Task<Result> CommentRecipe(Comment comment)
         {
-            var existingComment = await _repository.QueryFirstOrDefault<Guid>(
+            var existingComment = await _repository.QueryFirstOrDefault<Guid?>(
                 SqlQueryHelper.AlreadyCommented, new { comment.RecipeId, comment.CreatedById });
 
-            if (string.IsNullOrEmpty(existingComment.ToString()))
+            if (!string.IsNullOrEmpty(existingComment.ToString()))
             {
                 return new Result(StatusCodes.Status400BadRequest, "You have already commented on this recipe");
             }
@@ -165,7 +170,7 @@ namespace FullFridge.API.Services
             var commentCount = await _repository.QueryFirstOrDefault<int>(
                 SqlQueryHelper.GetCommentCount, new { comment.RecipeId });
 
-            var newRating = (currentRating * commentCount + comment.Rating) / (commentCount + 1);
+            var newRating = (currentRating * commentCount + comment.Rating) / (commentCount);
 
             await _repository.Execute(
                 SqlQueryHelper.ChangeRating, new { rating = newRating, comment.RecipeId});

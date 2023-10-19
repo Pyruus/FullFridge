@@ -31,7 +31,7 @@ namespace FullFridge.API.Controllers
 
         //POST: api/Recipe
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
         {
             var newId = await _recipeService.SaveRecipe(recipe);
@@ -46,7 +46,7 @@ namespace FullFridge.API.Controllers
 
         //DELETE: api/Recipe/{id}
         [HttpDelete("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult> DeleteRecipe(Guid id)
         {
             await _recipeService.DeleteRecipe(id);

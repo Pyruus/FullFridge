@@ -13,7 +13,7 @@ namespace FullFridge.API.Models
         public string? Image { get; set; }
         public List<int?>? Products { get; set; }
         public double? Rating { get; set; }
-        public IEnumerable<CommentDTO> Comments { get; set; }
+        public IEnumerable<CommentDTO>? Comments { get; set; }
         public int? MealDbId { get; set; }
 
         public Recipe() { }
@@ -31,7 +31,7 @@ namespace FullFridge.API.Models
 
             foreach (var product in productsList)
             {
-                var productId = products.FirstOrDefault(p => p.Name == product)?.Id;
+                var productId = products.FirstOrDefault(p => p.Name.ToLower() == product.ToLower())?.Id;
 
                 if (productId != null)
                 {
