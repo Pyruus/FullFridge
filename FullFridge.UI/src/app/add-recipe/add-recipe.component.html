@@ -15,7 +15,7 @@
         <div class="results-container" *ngIf="results.length > 0">
             <ul class="results-list">
                 <li *ngFor="let result of results" (click)="selectProduct(result)">
-                    {{ result.name }}
+                    {{ result.strIngredient }}
                 </li>
             </ul>
         </div>

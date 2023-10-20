@@ -102,11 +102,11 @@ export class AddRecipeComponent {
   selectProduct(product: any) {
     this.searchTerm = '';
     this.results = [];
-    if (this.chosenProductsIds.includes(product.id)) {
+    if (this.chosenProductsIds.includes(product.idIngredient)) {
       return;
     }
-    this.chosenProductsNames.push(product.name);
-    this.chosenProductsIds.push(product.id);
+    this.chosenProductsNames.push(product.strIngredient);
+    this.chosenProductsIds.push(product.idIngredient);
 
   }
 }

@@ -18,11 +18,19 @@ export class FileUploadService {
   }
 
   getFile(fileName: string): Observable<Blob> {
-    const url = `${this.ROOT_URL}/Recipe/File/${fileName}`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'responseType': 'blob'
-    });
+    let url;
+    let headers;
+    if(fileName.includes("themealdb")){
+      url = fileName; 
+    }
+    else{
+      url = `${this.ROOT_URL}/Recipe/File/${fileName}`;
+      headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'responseType': 'blob'
+      });
+    }
+    
 
     return this.http.get(url, {
       headers: headers,

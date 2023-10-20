@@ -31,7 +31,7 @@ namespace FullFridge.API.Controllers
 
         //POST: api/Recipe
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
         {
             var newId = await _recipeService.SaveRecipe(recipe);
@@ -46,7 +46,7 @@ namespace FullFridge.API.Controllers
 
         //DELETE: api/Recipe/{id}
         [HttpDelete("{id}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> DeleteRecipe(Guid id)
         {
             await _recipeService.DeleteRecipe(id);
@@ -79,7 +79,7 @@ namespace FullFridge.API.Controllers
 
         //POST: api/Recipe/Comment
         [HttpPost("Comment")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> PostComment(Comment comment)
         {
             var result = await _recipeService.CommentRecipe(comment);
@@ -89,7 +89,7 @@ namespace FullFridge.API.Controllers
 
         //POST: api/Recipe/File/{recipeId}
         [HttpPost("File/{recipeId}")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Upload(Guid recipeId, IFormFile file)
         {
             if (file != null && file.Length > 0)
@@ -148,8 +148,6 @@ namespace FullFridge.API.Controllers
 
         private string GetContentType(string fileExtension)
         {
-            // Map the file extension to the appropriate content type
-            // You can use the following example or create your own mapping logic
             switch (fileExtension)
             {
                 case ".pdf":
@@ -159,7 +157,6 @@ namespace FullFridge.API.Controllers
                 case ".jpg":
                 case ".jpeg":
                     return "image/jpeg";
-                // Add more file extensions and content types as needed
                 default:
                     return "application/octet-stream";
             }
