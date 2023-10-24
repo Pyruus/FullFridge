@@ -129,6 +129,12 @@ namespace FullFridge.API.Services
             var id = await _repository.QueryFirstOrDefault<Guid>(
                 SqlQueryHelper.InsertRecipe, recipe);
 
+            foreach (var product in recipe.Products)
+            {
+                await _repository.Execute(
+                    SqlQueryHelper.InsertRecipeProduct, new { RecipeId = id, ProductId = product });
+            }
+
             return id;
         }
 
