@@ -1,0 +1,12 @@
+.star-rating {
+    display: flex;
+  }
+  
+  .star {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .star.selected {
+    color: gold;
+  }

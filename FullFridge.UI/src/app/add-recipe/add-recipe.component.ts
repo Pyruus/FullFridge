@@ -55,7 +55,7 @@ export class AddRecipeComponent {
         title: formData.name,
         description: formData.description,
         createdById: this.cookieService.get("userId") || null,
-        productsRecipes: productsRecipes,
+        products: this.chosenProductsIds,
         image: "default.jpg"
       };
 
@@ -64,7 +64,7 @@ export class AddRecipeComponent {
           next: response => {
             this.postedRecipeId = response;
             if (this.selectedFile) {
-              this.fileUploadService.uploadFile(this.selectedFile, this.postedRecipeId)
+              this.fileUploadService.uploadFile(this.selectedFile, this.postedRecipeId, headers)
                 .then(response => {
                 })
                 .catch(error => {

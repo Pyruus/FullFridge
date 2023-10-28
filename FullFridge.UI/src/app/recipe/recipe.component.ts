@@ -4,7 +4,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { FileUploadService } from '../file-upload.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CookieService } from 'ngx-cookie-service';
-import { faTrash, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faThumbsUp, faThumbsDown, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -26,6 +26,7 @@ export class RecipeComponent implements OnInit {
   faDislike = faThumbsDown;
   myForm: FormGroup;
   isLike = true;
+  faStar = faStar;
   commentError: string | null = null;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fileService: FileUploadService, private sanitizer: DomSanitizer, private cookieService: CookieService, private router: Router, private formBuilder: FormBuilder, private location: Location) {

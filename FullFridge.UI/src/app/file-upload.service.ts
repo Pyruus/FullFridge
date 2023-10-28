@@ -10,11 +10,11 @@ export class FileUploadService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFile(file: File, recipeId: number): Promise<any> {
+  uploadFile(file: File, recipeId: number, headers: HttpHeaders): Promise<any> {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<any>(this.ROOT_URL + '/Recipe/File/' + recipeId, formData).toPromise();
+    return this.http.post<any>(this.ROOT_URL + '/Recipe/File/' + recipeId, formData, { headers }).toPromise();
   }
 
   getFile(fileName: string): Observable<Blob> {
