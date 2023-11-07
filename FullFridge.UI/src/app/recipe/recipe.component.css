@@ -16,8 +16,12 @@
 
 fa-icon{
     cursor: pointer;
-    color: white;
+    color: darkslategrey;
     margin-left: 1em;
+}
+
+fa-icon.selected{
+    color: white;
 }
 
 .content{
@@ -32,6 +36,10 @@ fa-icon{
     background: linear-gradient(180deg, #D3F83F 0%, rgba(149, 174, 49, 0.64) 100%);
     border-radius: 30px;
     width: 80%;
+}
+
+.comment>p{
+    align-items: left;
 }
 
 nav{
@@ -54,7 +62,6 @@ nav{
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1em;
 }
 
 .like{

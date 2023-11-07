@@ -28,6 +28,7 @@ export class RecipeComponent implements OnInit {
   isLike = true;
   faStar = faStar;
   commentError: string | null = null;
+  selectedStars = 0;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private fileService: FileUploadService, private sanitizer: DomSanitizer, private cookieService: CookieService, private router: Router, private formBuilder: FormBuilder, private location: Location) {
     this.myForm = this.formBuilder.group({
@@ -94,8 +95,8 @@ export class RecipeComponent implements OnInit {
       const requestBody = {
         content: formData.commentContent,
         createdById: this.cookieService.get("userId"),
-        isLike: this.isLike,
-        recipeId: this.recipe.id
+        recipeId: this.recipe.id,
+        rating: this.selectedStars
       };
 
       this.http.post(this.ROOT_URL + `/Recipe/Comment`, requestBody, { headers }).subscribe(
@@ -117,5 +118,9 @@ export class RecipeComponent implements OnInit {
   
   dislike(){
     this.isLike = false;
+  }
+
+  selectStar(star: number) {
+    this.selectedStars = star;
   }
 }

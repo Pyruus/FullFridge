@@ -2,7 +2,11 @@
     <div class="content">
         <fa-icon *ngIf="isUserAdmin()" [icon]="faTrash" size="xl" (click)="deleteRecipe()"></fa-icon>
         <div class="ratioSection">
-
+            <fa-icon *ngIf="true" [icon]="faStar" [class.selected]="recipe.rating >= 1"></fa-icon>
+            <fa-icon *ngIf="true" [icon]="faStar" [class.selected]="recipe.rating >= 2"></fa-icon>
+            <fa-icon *ngIf="true" [icon]="faStar" [class.selected]="recipe.rating >= 3"></fa-icon>
+            <fa-icon *ngIf="true" [icon]="faStar" [class.selected]="recipe.rating >= 4"></fa-icon>
+            <fa-icon *ngIf="true" [icon]="faStar" [class.selected]="recipe.rating >= 5"></fa-icon>
         </div>
         <h1>{{recipe?.title}}</h1>
         <img [src]=sanitizedFileUrl>
@@ -13,12 +17,25 @@
         <form [formGroup]="myForm" (ngSubmit)="submitForm()" id="addCommentForm">
             <textarea name="comment-content" rows="3" formControlName="commentContent" required
                 placeholder="Put your comment here" class="addComment"></textarea>
-                
+            <div class="ratioSection">
+                <fa-icon *ngIf="true" [icon]="faStar" (click)="selectStar(1)" [class.selected]="selectedStars >= 1"></fa-icon>
+                <fa-icon *ngIf="true" [icon]="faStar" (click)="selectStar(2)" [class.selected]="selectedStars >= 2"></fa-icon>
+                <fa-icon *ngIf="true" [icon]="faStar" (click)="selectStar(3)" [class.selected]="selectedStars >= 3"></fa-icon>
+                <fa-icon *ngIf="true" [icon]="faStar" (click)="selectStar(4)" [class.selected]="selectedStars >= 4"></fa-icon>
+                <fa-icon *ngIf="true" [icon]="faStar" (click)="selectStar(5)" [class.selected]="selectedStars >= 5"></fa-icon>
+            </div>
             <input type="submit" [disabled]="myForm.invalid">
         </form>
         <h1>Comments</h1>
         <div class="comment" *ngFor="let comment of recipe.comments">
-            <h1>{{comment.createdBy.details.name + ' ' + comment.createdBy.details.surname}}</h1>
+            <h1>{{comment.name + ' ' + comment.surname}}</h1>
+            <div class="ratioSection">
+                <fa-icon *ngIf="true" [icon]="faStar" [class.selected]="comment.rating >= 1"></fa-icon>
+                <fa-icon *ngIf="true" [icon]="faStar" [class.selected]="comment.rating >= 2"></fa-icon>
+                <fa-icon *ngIf="true" [icon]="faStar" [class.selected]="comment.rating >= 3"></fa-icon>
+                <fa-icon *ngIf="true" [icon]="faStar" [class.selected]="comment.rating >= 4"></fa-icon>
+                <fa-icon *ngIf="true" [icon]="faStar" [class.selected]="comment.rating >= 5"></fa-icon>
+            </div>
             <p>{{comment.content}}</p>
         </div>
     </nav>
