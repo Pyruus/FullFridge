@@ -13,7 +13,6 @@ import { FindRecipeComponent } from './find-recipe/find-recipe.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { StarRatingComponent } from './star-rating/star-rating.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +22,7 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
     FindRecipeComponent,
     RecipeComponent,
     LoginComponent,
-    RegisterComponent,
-    StarRatingComponent
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
