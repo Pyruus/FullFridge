@@ -49,6 +49,7 @@ builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>(); 
 builder.Services.AddScoped<IMealDbHttpClient, MealDbHttpClient>();
+builder.Services.AddScoped<IForumService, ForumService>();
 builder.Services.AddSingleton<IDbConnection>(_ => new NpgsqlConnection(builder.Configuration.GetSection("ConnectionStrings")["FullFridgeDb"]));
 builder.Services.AddSingleton<IDapperRepository, DapperRepository>();
 builder.Services.AddCors(options => {

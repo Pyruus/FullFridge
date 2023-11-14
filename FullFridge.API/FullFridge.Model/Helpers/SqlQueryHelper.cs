@@ -75,5 +75,28 @@
         public static string InsertRecipeProduct =>
             @"INSERT INTO recipes_products (recipe_id, product_id)
               VALUES (@RecipeId, @ProductId)";
+
+        public static string InsertPost =>
+            @"INSERT INTO posts (title, content, created_by, recipe_id)
+              VALUES (@Title, @Content, @CreatedBy, @RecipeId)";
+
+        public static string InsertPostComment =>
+            @"INSERT INTO post_comments (post_id, content, created_by)
+	          VALUES (@PostId, @Content, @CreatedBy)";
+
+        public static string GetPosts =>
+            @"SELECT id, title, content, created_by AS CreatedBy, created_at AS CreatedAt, recipe_id As RecipeId FROM posts ORDER BY created_at desc";
+
+        public static string GetPostComments =>
+            @"SELECT c.id, c.post_id AS PostId, c.content, c.created_at AS CreatedAt, u.name, u.surname
+              FROM post_comments AS c 
+              JOIN users AS u ON c.created_by = u.id
+              WHERE post_id = @postId";
+
+        public static string GetUserDetails =>
+            @"SELECT id, email, role, name, surname FROM users WHERE id = @id";
+
+        public static string GetPostById =>
+            @"SELECT id, title, content, created_by AS CreatedBy, created_at AS CreatedAt, recipe_id AS RecipeId FROM posts WHERE id = @id";
     }
 }
