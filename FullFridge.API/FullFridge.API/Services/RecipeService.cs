@@ -176,7 +176,7 @@ namespace FullFridge.API.Services
             var commentCount = await _repository.QueryFirstOrDefault<int>(
                 SqlQueryHelper.GetCommentCount, new { comment.RecipeId });
 
-            var newRating = (currentRating * commentCount + comment.Rating) / (commentCount);
+            var newRating = (currentRating * (commentCount - 1) + comment.Rating) / (commentCount);
 
             await _repository.Execute(
                 SqlQueryHelper.ChangeRating, new { rating = newRating, comment.RecipeId});

@@ -53,10 +53,8 @@ export class RegisterComponent implements OnInit {
       const requestBody = {
         email: formData.email,
         password: formData.password,
-        details: {
-          name: formData.name,
-          surname: formData.surname
-        }
+        name: formData.name,
+        surname: formData.surname
       };
 
       this.http.post(this.ROOT_URL + `/User/Register`, requestBody).subscribe(
