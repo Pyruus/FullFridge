@@ -1,0 +1,23 @@
+<div class = main-panel>
+    <div *ngIf="post" class="container mt-4">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title">{{ post.title }}</h1>
+            <p class="card-text">{{ post.content }}</p>
+            <p class="card-text">
+              <a class="btn btn-primary">Go to Recipe</a>
+            </p>
+          </div>
+        </div>
+      
+        <div *ngIf="comments && comments.length > 0" class="mt-4">
+          <h2>Comments</h2>
+          <ul class="list-group">
+            <li *ngFor="let comment of comments" class="list-group-item">
+              <p class="mb-0">{{ comment.content }}</p>
+              <!-- Add more details for each comment as needed -->
+            </li>
+          </ul>
+        </div>
+      </div>
+</div>

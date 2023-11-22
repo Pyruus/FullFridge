@@ -1,0 +1,22 @@
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .pagination {
+    justify-content: center;
+  }
+
+  nav{
+    background: none;
+    width: 100%;
+  }
+
+  .main-panel{
+    height: 100%;
+    min-height: 90vh;
+  }
+
+  .page-item{
+    cursor: pointer;
+  }

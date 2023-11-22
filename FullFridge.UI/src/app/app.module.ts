@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SharedModule } from './shared/shared.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,8 @@ import { FindRecipeComponent } from './find-recipe/find-recipe.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { PostListComponent } from './post-list/post-list.component';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import { RegisterComponent } from './register/register.component';
     FindRecipeComponent,
     RecipeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PostListComponent,
+    PostDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +35,8 @@ import { RegisterComponent } from './register/register.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

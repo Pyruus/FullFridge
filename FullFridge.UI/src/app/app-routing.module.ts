@@ -6,6 +6,8 @@ import { FindRecipeComponent } from './find-recipe/find-recipe.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { PostListComponent } from './post-list/post-list.component';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'recipe/:id', component: RecipeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
+  { path: 'forum', component: PostListComponent},
+  { path: 'post/:id', component: PostDetailsComponent },
   { path: '**', component: HomeComponent},
 
 ];

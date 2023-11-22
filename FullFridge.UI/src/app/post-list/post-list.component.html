@@ -1,0 +1,18 @@
+<div class = main-panel>
+    <div class="container mt-4">
+        <div *ngFor="let post of posts" class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content | truncate:100 }}</p>
+          </div>
+        </div>
+      
+        <nav>
+          <ul class="pagination">
+            <li class="page-item" *ngFor="let pageNumber of getPageNumbers()">
+              <a class="page-link" (click)="setPage(pageNumber)">{{ pageNumber }}</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+</div>
