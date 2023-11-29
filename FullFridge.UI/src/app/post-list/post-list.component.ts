@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Post, Posts } from '../models/posts.model';
 import { Router } from '@angular/router';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-post-list',
@@ -15,7 +16,7 @@ export class PostListComponent implements OnInit{
   pageSize = 10;
   currentPage = 1;
 
-  constructor(protected http: HttpClient, protected router: Router) {
+  constructor(protected http: HttpClient, protected router: Router, protected appComponent: AppComponent) {
     this.pages = 1;
     this.posts = null;
   }

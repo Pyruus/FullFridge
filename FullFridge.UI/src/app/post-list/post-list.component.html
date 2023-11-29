@@ -1,5 +1,5 @@
 <div class = main-panel>
-  <p class="card-text">
+  <p class="card-text" *ngIf="this.appComponent.isUserLogged()">
     <a class="btn btn-primary" (click)="addPost()">+</a>
   </p>
     <div class="container mt-4">

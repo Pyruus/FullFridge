@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Post, Posts } from '../models/posts.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostListComponent } from './post-list.component';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-post-list',
@@ -12,8 +13,8 @@ import { PostListComponent } from './post-list.component';
 export class PostListRecipeComponent extends PostListComponent{
   recipeId : any;
 
-  constructor(http: HttpClient, router: Router, private route: ActivatedRoute) {
-    super(http, router);
+  constructor(http: HttpClient, router: Router, private route: ActivatedRoute, appComponent: AppComponent) {
+    super(http, router, appComponent);
   }
 
   override ngOnInit(): void {

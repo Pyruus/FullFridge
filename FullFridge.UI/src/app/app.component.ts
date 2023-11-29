@@ -22,7 +22,7 @@ export class AppComponent implements OnInit{
     }
   }
 
-  isUserLogged(){
+  public isUserLogged(){
     return this.cookieService.check("userId");
   }
 
