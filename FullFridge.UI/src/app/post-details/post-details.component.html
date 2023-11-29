@@ -3,7 +3,7 @@
         <div class="card">
           <div class="card-body">
             <h1 class="card-title">{{ post.title }}</h1>
-            <p class="card-text">{{ post.content }}</p>
+            <p class="card-text" [ngStyle]="{'white-space': 'pre-line'}">{{ post.content }}</p>
             <p class="card-text">
               <a *ngIf="post.recipeId" class="btn btn-primary" (click)="redirectToRecipe()">Go to Recipe</a>
             </p>

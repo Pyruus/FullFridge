@@ -9,6 +9,8 @@ import { RegisterComponent } from './register/register.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { PostListRecipeComponent } from './post-list/post-list-recipe.component';
+import { NewPostComponent } from './new-post/new-post.component';
+import { NewPostRecipeComponent } from './new-post/new-post-recipe.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'forum', component: PostListComponent},
   { path: 'post/:id', component: PostDetailsComponent },
   { path: 'forum/recipe/:id', component: PostListRecipeComponent},
+  { path: 'add-post', component: NewPostComponent},
+  { path: 'add-post/recipe/:id',component: NewPostRecipeComponent},
   { path: '**', component: HomeComponent}
 
 ];

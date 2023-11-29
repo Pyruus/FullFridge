@@ -50,4 +50,8 @@ export class PostListComponent implements OnInit{
     this.router.navigate([`post/${postId}`]);
   }
 
+  addPost(): void{
+    this.router.navigate([`add-post`])
+  }
+
 }

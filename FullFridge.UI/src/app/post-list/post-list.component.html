@@ -1,4 +1,7 @@
 <div class = main-panel>
+  <p class="card-text">
+    <a class="btn btn-primary" (click)="addPost()">+</a>
+  </p>
     <div class="container mt-4">
         <div *ngFor="let post of posts" class="card mb-3">
           <div class="card-body"  (click)="redirectToPost(post.id)">

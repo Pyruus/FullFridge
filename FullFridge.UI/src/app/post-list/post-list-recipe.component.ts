@@ -29,4 +29,8 @@ export class PostListRecipeComponent extends PostListComponent{
     );
   }
 
+  override addPost(): void{
+    this.router.navigate([`add-post/recipe/${this.recipeId}`]);
+  }
+
 }

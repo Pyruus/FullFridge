@@ -44,6 +44,26 @@ nav {
 
 .main-panel {
     background: #1E1E1E;
+    min-height: 90vh;
+}
+
+.container{
+    color: white;
+}
+
+.btn{
+    background: #00A194;
+    box-shadow: 4em 2em 4em rgba(0, 0, 0, 0.25);
+    border-radius: 1em;
+    text-align: center;
+    padding: 0.4em;
+    color: white;
+    font-family: 'Inder';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2.2vh;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 #choices {
