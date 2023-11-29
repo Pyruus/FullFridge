@@ -66,6 +66,20 @@ namespace FullFridge.API.Services
 
             return new PostDTO(post, user);
         }
+
+        public async Task<PostList> GetRecipePosts(int skip, int take, Guid recipeId)
+        {
+            var posts = await _repository.Query<Post>(
+                SqlQueryHelper.GetPostsByRecipe, new { recipeId });
+
+            var postsList = new PostList()
+            {
+                Posts = posts.Skip(skip).Take(take).ToList(),
+                Pages = (int)Math.Ceiling((decimal)posts.Count() / (decimal)take)
+            };
+
+            return postsList;
+        }
     }
 
     public interface IForumService
@@ -75,5 +89,6 @@ namespace FullFridge.API.Services
         Task<PostList> GetAllPosts(int skip, int take);
         Task<IEnumerable<PostCommentDTO>> GetComments(Guid postId);
         Task<PostDTO> GetPostDetails(Guid id);
+        Task<PostList> GetRecipePosts(int skip, int take, Guid recipeId);
     }
 }

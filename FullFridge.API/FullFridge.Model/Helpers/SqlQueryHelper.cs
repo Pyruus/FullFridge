@@ -98,5 +98,8 @@
 
         public static string GetPostById =>
             @"SELECT id, title, content, created_by AS CreatedBy, created_at AS CreatedAt, recipe_id AS RecipeId FROM posts WHERE id = @id";
+
+        public static string GetPostsByRecipe =>
+            @"SELECT id, title, content, created_by AS CreatedBy, created_at AS CreatedAt, recipe_id As RecipeId FROM posts WHERE recipe_id = @recipeId ORDER BY created_at desc";
     }
 }

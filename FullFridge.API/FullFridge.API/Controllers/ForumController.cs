@@ -59,5 +59,15 @@ namespace FullFridge.API.Controllers
 
             return Ok(post);
         }
+
+        //GET: api/Forum/Recipe/{recipeId}
+        [HttpGet("Recipe/{recipeId}")]
+        public async Task<ActionResult<PostList>> GetPosts(Guid recipeId, int page, int pageSize)
+        {
+            int skipCount = (page - 1) * pageSize;
+            var posts = await _forumService.GetRecipePosts(skipCount, pageSize, recipeId);
+
+            return Ok(posts);
+        }
     }
 }
