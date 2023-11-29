@@ -1,7 +1,7 @@
 <div class = main-panel>
     <div class="container mt-4">
         <div *ngFor="let post of posts" class="card mb-3">
-          <div class="card-body">
+          <div class="card-body"  (click)="redirectToPost(post.id)">
             <h5 class="card-title">{{ post.title }}</h5>
             <p class="card-text">{{ post.content | truncate:100 }}</p>
           </div>

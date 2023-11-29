@@ -14,6 +14,9 @@
     </div>
     <nav>
         <div *ngIf="commentError" class="failInfo">{{commentError}}</div>
+        <p class="card-text">
+            <a class="btn btn-primary" (click)="redirectToForum()">Go to forum posts</a>
+        </p>
         <form [formGroup]="myForm" (ngSubmit)="submitForm()" id="addCommentForm">
             <textarea name="comment-content" rows="3" formControlName="commentContent" required
                 placeholder="Put your comment here" class="addComment"></textarea>
@@ -38,5 +41,6 @@
             </div>
             <p>{{comment.content}}</p>
         </div>
+        
     </nav>
 </div>

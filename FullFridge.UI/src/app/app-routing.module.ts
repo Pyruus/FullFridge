@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
+import { PostListRecipeComponent } from './post-list/post-list-recipe.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'forum', component: PostListComponent},
   { path: 'post/:id', component: PostDetailsComponent },
-  { path: '**', component: HomeComponent},
+  { path: 'forum/recipe/:id', component: PostListRecipeComponent},
+  { path: '**', component: HomeComponent}
 
 ];
 

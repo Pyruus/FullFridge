@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Post, Comment } from '../models/posts.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-details',
@@ -16,7 +17,8 @@ export class PostDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -33,5 +35,9 @@ export class PostDetailsComponent implements OnInit {
     this.http.get<Comment[]>(this.ROOT_URL + `/Forum/${this.postId}/Comments`).subscribe(comments => {
       this.comments = comments;
     });
+  }
+
+  redirectToRecipe(): void{
+    this.router.navigate([`recipe/${this.post?.recipeId}`])
   }
 }

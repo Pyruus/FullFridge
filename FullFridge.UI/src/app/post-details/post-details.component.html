@@ -5,7 +5,7 @@
             <h1 class="card-title">{{ post.title }}</h1>
             <p class="card-text">{{ post.content }}</p>
             <p class="card-text">
-              <a class="btn btn-primary">Go to Recipe</a>
+              <a *ngIf="post.recipeId" class="btn btn-primary" (click)="redirectToRecipe()">Go to Recipe</a>
             </p>
           </div>
         </div>
@@ -15,7 +15,6 @@
           <ul class="list-group">
             <li *ngFor="let comment of comments" class="list-group-item">
               <p class="mb-0">{{ comment.content }}</p>
-              <!-- Add more details for each comment as needed -->
             </li>
           </ul>
         </div>

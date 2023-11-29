@@ -123,4 +123,8 @@ export class RecipeComponent implements OnInit {
   selectStar(star: number) {
     this.selectedStars = star;
   }
+
+  redirectToForum(): void{
+    this.router.navigate(([`forum/recipe/${this.recipe.id}`]));
+  }
 }

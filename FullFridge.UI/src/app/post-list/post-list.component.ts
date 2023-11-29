@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Post, Posts } from '../models/posts.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-list',
@@ -14,7 +15,7 @@ export class PostListComponent implements OnInit{
   pageSize = 10;
   currentPage = 1;
 
-  constructor(private http: HttpClient) {
+  constructor(protected http: HttpClient, protected router: Router) {
     this.pages = 1;
     this.posts = null;
   }
@@ -43,6 +44,10 @@ export class PostListComponent implements OnInit{
 
   getPageNumbers(): number[] {
     return Array.from({ length: this.totalPages }, (_, index) => index + 1);
+  }
+
+  redirectToPost(postId: string): void{
+    this.router.navigate([`post/${postId}`]);
   }
 
 }
