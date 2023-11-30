@@ -59,5 +59,23 @@ namespace FullFridge.API.Controllers
 
             return Ok(post);
         }
+
+        //DELETE: api/Forum/{id}
+        [HttpDelete("{postId}")]
+        public async Task<ActionResult> DeletePost(Guid postId, [FromQuery] Guid userId)
+        {
+            var result = await _forumService.DeletePost(postId, userId);
+
+            return StatusCode(result.Status, result.Message);
+        }
+
+        //DELETE: api/Forum/Comments/{id}
+        [HttpDelete("Comments/{commentId}")]
+        public async Task<ActionResult> DeletePostComment(Guid commentId, [FromQuery] Guid userId)
+        {
+            var result = await _forumService.DeletePostComment(commentId, userId);
+
+            return StatusCode(result.Status, result.Message);
+        }
     }
 }

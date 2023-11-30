@@ -1,4 +1,5 @@
 ﻿using FullFridge.API.Models;
+using FullFridge.API.Models.Enums;
 using FullFridge.Model;
 using FullFridge.Model.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,8 @@ namespace FullFridge.API.Services
             }
 
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
+            user.Role = user.Role == Roles.RoleAdmin ? Roles.RoleAdmin : Roles.RoleUser;
 
             await _repository.Execute(
                 SqlQueryHelper.InsertUser, user);

@@ -98,5 +98,20 @@
 
         public static string GetPostById =>
             @"SELECT id, title, content, created_by AS CreatedBy, created_at AS CreatedAt, recipe_id AS RecipeId FROM posts WHERE id = @id";
+
+        public static string GetPostCommentById =>
+            @"SELECT id, post_id AS PostId, content, created_at AS CreatedAt, created_by AS CreatedBy WHERE id = @id";
+
+        public static string DeletePost =>
+            @"DELETE FROM posts WHERE id = @id";
+
+        public static string DeletePostComments =>
+            @"DELETE FROM post_comments WHERE post_id = @id";
+
+        public static string DeleteSinglePostComment =>
+            @"DELETE FROM post_comments WHERE id = @id";
+
+        public static string GetUserRole =>
+            @"SELECT role FROM users WHERE id = @id";
     }
 }
