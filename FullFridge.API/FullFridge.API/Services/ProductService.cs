@@ -1,6 +1,5 @@
 ﻿using FullFridge.API.Models;
 using FullFridge.API.Services.MealDb;
-using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
 namespace FullFridge.API.Services

@@ -1,8 +1,6 @@
 ﻿using FullFridge.API.Models;
 using FullFridge.Model;
 using FullFridge.Model.Helpers;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FullFridge.API.Services
 {
