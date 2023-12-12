@@ -1,4 +1,4 @@
-# FullFridge - ZTPAI Project
+# FullFridge
 
 ![image](https://user-images.githubusercontent.com/50916968/200363371-765324ff-b2d8-4369-8d78-890720c9f82b.png)
 
