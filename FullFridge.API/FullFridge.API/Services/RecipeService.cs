@@ -28,9 +28,8 @@ namespace FullFridge.API.Services
 
             if (!allProducts && !otherProducts)
             {
-                filteredRecipes = recipes.Where(recipe =>
-                productIds.All(productId =>
-                    recipe.Products.Any(pr => pr == productId)))
+                filteredRecipes = recipes.Where(recipe => recipe.Products != null &&
+                    recipe.Products.All(p => p.HasValue && productIds.Contains(p.Value)))
                     .Select(recipes => new RecipeListDTO
                     {
                         Id = recipes.Id,
@@ -42,9 +41,8 @@ namespace FullFridge.API.Services
             }
             else if (otherProducts && !allProducts)
             {
-                filteredRecipes = recipes.Where(recipe =>
-                productIds.Any(productId =>
-                    recipe.Products.Any(pr => pr == productId)))
+                filteredRecipes = recipes.Where(recipe => recipe.Products != null &&
+                    recipe.Products.Intersect(productIds).Any())
                     .Select(recipes => new RecipeListDTO
                     {
                         Id = recipes.Id,
@@ -56,36 +54,29 @@ namespace FullFridge.API.Services
             }
             else if (!otherProducts && allProducts)
             {
-                var providedProductSet = new HashSet<int?>(productIds);
-                filteredRecipes = recipes.Where(recipe =>
-                    recipe.Products
-                        .Select(pr => pr)
-                        .ToHashSet()
-                        .SetEquals(providedProductSet))
-                        .Select(recipes => new RecipeListDTO
-                        {
-                            Id = recipes.Id,
-                            Title = recipes.Title,
-                            Rating = recipes.Rating,
-                            Image = recipes.Image
-                        })
+                filteredRecipes = recipes.Where(recipe => recipe.Products != null &&
+                    recipe.Products.All(p => productIds.Contains(p.GetValueOrDefault())) &&
+                    recipe.Products.Count == productIds.Count)
+                    .Select(recipes => new RecipeListDTO
+                    {
+                        Id = recipes.Id,
+                        Title = recipes.Title,
+                        Rating = recipes.Rating,
+                        Image = recipes.Image
+                    })
                     .ToList();
             }
             else
             {
-                var providedProductSet = new HashSet<int?>(productIds);
-                filteredRecipes = recipes.Where(recipe =>
-                    recipe.Products
-                        .Select(pr => pr)
-                        .ToHashSet()
-                        .IsSubsetOf(providedProductSet))
-                        .Select(recipes => new RecipeListDTO
-                        {
-                            Id = recipes.Id,
-                            Title = recipes.Title,
-                            Rating = recipes.Rating,
-                            Image = recipes.Image
-                        })
+                filteredRecipes = recipes.Where(recipe => recipe.Products != null &&
+                    productIds.All(p => recipe.Products.Contains(p.GetValueOrDefault())))
+                    .Select(recipes => new RecipeListDTO
+                    {
+                        Id = recipes.Id,
+                        Title = recipes.Title,
+                        Rating = recipes.Rating,
+                        Image = recipes.Image
+                    })
                     .ToList();
             }
 
