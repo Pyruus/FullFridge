@@ -5,7 +5,9 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullFridge.API", "FullFridge.API\FullFridge.API.csproj", "{1803BABB-B0AC-4463-8AC0-38591255FE9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullFridge.Model", "FullFridge.Model\FullFridge.Model.csproj", "{0D84986C-4F1E-4D5C-AC95-4BFD4E7B64DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullFridge.Model", "FullFridge.Model\FullFridge.Model.csproj", "{0D84986C-4F1E-4D5C-AC95-4BFD4E7B64DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullFridge.Test", "FullFridge.Test\FullFridge.Test.csproj", "{A41D4ABE-AEB4-41F0-90BB-6CBE58547E24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0D84986C-4F1E-4D5C-AC95-4BFD4E7B64DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D84986C-4F1E-4D5C-AC95-4BFD4E7B64DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D84986C-4F1E-4D5C-AC95-4BFD4E7B64DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A41D4ABE-AEB4-41F0-90BB-6CBE58547E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A41D4ABE-AEB4-41F0-90BB-6CBE58547E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A41D4ABE-AEB4-41F0-90BB-6CBE58547E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A41D4ABE-AEB4-41F0-90BB-6CBE58547E24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
