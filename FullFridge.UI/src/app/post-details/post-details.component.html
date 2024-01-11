@@ -2,6 +2,7 @@
     <div *ngIf="post" class="container mt-4">
         <div class="card">
           <div class="card-body">
+            <p class="mb-0 text-secondary" *ngIf="post.createdBy?.name and post.createdBy?.surname">{{ post.createdBy.name + " " + post.createdBy.surname}}</p>
             <h1 class="card-title">{{ post.title }}</h1>
             <p class="card-text" [ngStyle]="{'white-space': 'pre-line'}">{{ post.content }}</p>
             <p class="card-text">
@@ -9,12 +10,25 @@
             </p>
           </div>
         </div>
+
+        <div *ngIf="this.appComponent.isUserLogged()" class ="card bg-transparent border-0">
+          <form class="card-body text-center" (ngSubmit)="commentPost()">
+            <div class="form-group">
+              <textarea *ngIf="newComment" id="comment-content" [(ngModel)]="newComment.content" name="comment-content" rows="2" required></textarea>
+            </div>
+            <p class="card-text">
+              <button type="submit" class="btn btn-primary">Add your comment</button>
+            </p>
+          </form>
+            
+          </div>
       
         <div *ngIf="comments && comments.length > 0" class="mt-4">
           <h2>Comments</h2>
           <ul class="list-group">
-            <li *ngFor="let comment of comments" class="list-group-item">
+            <li *ngFor="let comment of comments" class="list-group-item mb-1">
               <p class="mb-0">{{ comment.content }}</p>
+              <p class="mb-0 text-secondary">{{ comment.name + " " + comment.surname }}</p>
             </li>
           </ul>
         </div>

@@ -7,7 +7,7 @@ export interface Post {
     id: string,
     title: string,
     content: string,
-    createdBy: string,
+    createdBy: User,
     createdAt: string,
     recipeId: string
 }
@@ -18,4 +18,17 @@ export interface Comment{
     name: string,
     surname: string,
     createdAt: string
+}
+
+export interface NewComment {
+    content: string,
+    postId: string,
+    createdBy: string
+}
+
+export interface User {
+    id: string,
+    email: string,
+    name: string,
+    surname: string
 }

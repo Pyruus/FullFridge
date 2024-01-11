@@ -91,7 +91,8 @@
             @"SELECT c.id, c.post_id AS PostId, c.content, c.created_at AS CreatedAt, u.name, u.surname
               FROM post_comments AS c 
               JOIN users AS u ON c.created_by = u.id
-              WHERE post_id = @postId";
+              WHERE post_id = @postId
+              ORDER BY created_at asc";
 
         public static string GetUserDetails =>
             @"SELECT id, email, role, name, surname FROM users WHERE id = @id";
